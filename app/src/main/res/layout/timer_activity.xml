@@ -42,6 +42,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textStyle="bold"
+                android:textSize="20dp"
                 android:gravity="center"/>
 
         <Button
