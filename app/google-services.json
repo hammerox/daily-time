@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "113507352812",
+    "firebase_url": "https://dailytime-bad83.firebaseio.com",
+    "project_id": "dailytime-bad83",
+    "storage_bucket": "dailytime-bad83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113507352812:android:8f2e30280e7dd6d0",
+        "android_client_info": {
+          "package_name": "com.mcustodio.dailytime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113507352812-gml0708u5p7c9rbq5fvd9gee1t7c2i26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mcustodio.dailytime",
+            "certificate_hash": "0a4a69f27cb8bc2ed65a36d096dfe982b4d2b7f8"
+          }
+        },
+        {
+          "client_id": "113507352812-t23ajqgktov5o53aeltr1hvak27fo01a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa4wfVjqz9ndVl8YPWa9C2E23YcKz5Rho"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113507352812-t23ajqgktov5o53aeltr1hvak27fo01a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
