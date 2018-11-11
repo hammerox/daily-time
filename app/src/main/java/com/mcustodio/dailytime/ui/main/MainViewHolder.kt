@@ -13,7 +13,7 @@ class MainViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     fun setValues(user: User) {
         textName.text = user.nickname
-        textTimer.text = user.lastTimer?.let {
+        textTimer.text = user.time?.let {
             SimpleDateFormat("m'm'ss").format(it)
         } ?: "-"
     }

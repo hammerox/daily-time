@@ -1,8 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".TimerActivity"/>
+        android:orientation="vertical"
+        tools:context=".TimerActivity">
+
+    <EditText
+            android:id="@+id/edit_timer_whatyoudid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:inputType="textCapSentences|textMultiLine"
+            android:hint="O que você fez?"/>
+
+    <EditText
+            android:id="@+id/edit_timer_whatyouwilldo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:inputType="textCapSentences|textMultiLine"
+            android:hint="O que você vai fazer?"/>
+
+    <EditText
+            android:id="@+id/edit_timer_difficulties"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:inputType="textCapSentences|textMultiLine"
+            android:hint="Dificuldades?"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:orientation="horizontal">
+
+        <Chronometer
+                android:id="@+id/chronometer_timer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+        <Button
+                android:id="@+id/button_timer_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:text="Salvar"/>
+
+        <Button
+                android:id="@+id/button_timer_startorpause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start"/>
+
+    </LinearLayout>
+
+</LinearLayout>

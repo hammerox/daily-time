@@ -38,6 +38,7 @@ class MainFragment : Fragment() {
 //        adapter.userList = arrayListOf(User("mcustodio@stone.com.br", "Morrice", 78000L), User("pfrocha@stone.com.br", "Pedrinho", 92000L))
         adapter.onItemClick = {
             val intent = Intent(activity, TimerActivity::class.java)
+            intent.putExtra("userKey", it.key())
             startActivity(intent)
         }
 
