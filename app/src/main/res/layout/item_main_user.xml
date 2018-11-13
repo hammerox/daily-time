@@ -3,6 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="?android:attr/listPreferredItemHeight"
              xmlns:tools="http://schemas.android.com/tools"
+             android:foreground="?android:attr/selectableItemBackground"
              android:padding="16dp">
 
     <TextView

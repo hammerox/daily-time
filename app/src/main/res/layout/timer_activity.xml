@@ -7,6 +7,11 @@
         android:orientation="vertical"
         tools:context=".TimerActivity">
 
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O que você fez?"/>
+
     <EditText
             android:id="@+id/edit_timer_whatyoudid"
             android:layout_width="match_parent"
@@ -14,6 +19,11 @@
             android:layout_weight="1"
             android:inputType="textCapSentences|textMultiLine"
             android:hint="O que você fez?"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O que você vai fazer?"/>
 
     <EditText
             android:id="@+id/edit_timer_whatyouwilldo"
@@ -23,13 +33,18 @@
             android:inputType="textCapSentences|textMultiLine"
             android:hint="O que você vai fazer?"/>
 
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Impedimentos?"/>
+
     <EditText
             android:id="@+id/edit_timer_difficulties"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:inputType="textCapSentences|textMultiLine"
-            android:hint="Dificuldades?"/>
+            android:hint="impedimentos?"/>
 
     <LinearLayout
             android:layout_width="match_parent"
