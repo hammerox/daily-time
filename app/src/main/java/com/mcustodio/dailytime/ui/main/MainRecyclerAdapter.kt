@@ -14,7 +14,8 @@ class MainRecyclerAdapter(var onItemClick: ((User) -> Unit)? = null) : RecyclerV
 
     var userList: List<User> = ArrayList()
         set (value) {
-            field = value
+            field = value.sortedWith(compareBy<User> { it.time != null }
+                    .thenBy { it.nickname })
             notifyDataSetChanged()
         }
 

@@ -11,8 +11,8 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         button_user_save.setOnClickListener {
-            val user = User(edit_user_email.text.toString(), edit_user_nickname.text.toString(), null)
-            FirebaseDB.users.updateChildren(hashMapOf(user.key() to user as Any))
+            val user = User(edit_user_nickname.text.toString(), null, null,null)
+            FirebaseDB.users.push().setValue(user)
                 .addOnSuccessListener { finish() }
                 .addOnFailureListener { Toast.makeText(this, it.message, Toast.LENGTH_LONG).show() }
         }

@@ -38,7 +38,7 @@ class MainFragment : Fragment() {
 //        adapter.userList = arrayListOf(User("mcustodio@stone.com.br", "Morrice", 78000L), User("pfrocha@stone.com.br", "Pedrinho", 92000L))
         adapter.onItemClick = {
             val intent = Intent(activity, TimerActivity::class.java)
-            intent.putExtra("userKey", it.key())
+            intent.putExtra("userKey", it.id)
             startActivity(intent)
         }
 
@@ -50,7 +50,11 @@ class MainFragment : Fragment() {
         FirebaseDB.users.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
             override fun onDataChange(data: DataSnapshot) {
-                val users = data.children.mapNotNull { it.getValue(User::class.java) }
+                val users = data.children.mapNotNull {
+                    val user = it.getValue(User::class.java)
+                    user?.id = it.key
+                    user
+                }
                 adapter.userList = users.toList()
             }
         })
