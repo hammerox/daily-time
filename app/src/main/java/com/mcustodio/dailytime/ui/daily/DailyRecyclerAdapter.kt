@@ -14,8 +14,13 @@ class DailyRecyclerAdapter(var onItemClick: ((Player) -> Unit)? = null) : Recycl
 
     var playerList: List<Player> = ArrayList()
         set (value) {
-            field = value.sortedWith(compareBy<Player> { it.time != null }
-                    .thenBy { it.nickname })
+            field = value.sortedWith(compareBy { it.nickname })
+            notifyDataSetChanged()
+        }
+
+    var timeList: Map<String, Long?> = HashMap()
+        set (value) {
+            field = value
             notifyDataSetChanged()
         }
 
@@ -29,10 +34,11 @@ class DailyRecyclerAdapter(var onItemClick: ((Player) -> Unit)? = null) : Recycl
     }
 
     override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
-        val user = playerList[position]
-        holder.setValues(user)
+        val player = playerList[position]
+        val time = timeList[player.id]
+        holder.setValues(player, time)
         holder.view.setOnClickListener {
-            onItemClick?.invoke(user)
+            onItemClick?.invoke(player)
         }
     }
 

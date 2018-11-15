@@ -11,9 +11,9 @@ class DailyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     private val textName = view.text_dailyitem_name
     private val textTimer = view.text_dailyitem_timer
 
-    fun setValues(player: Player) {
+    fun setValues(player: Player, time: Long?) {
         textName.text = player.nickname
-        textTimer.text = player.time?.let {
+        textTimer.text = time?.let {
             SimpleDateFormat("m'm'ss").format(it)
         } ?: "-"
     }

@@ -11,8 +11,9 @@ object FirebaseDB {
     val teamsKey = "teams"
     val teams = root.child(teamsKey)
 
+    // todo - Remover mock team_id = -LRAIWUKQjOqTwGsJD1o
     val playersKey = "players"
-    val players = root.child(playersKey)
+    val players = root.child(playersKey).orderByChild("team_id").equalTo("-LRAIWUKQjOqTwGsJD1o").ref
     fun onPlayersChange(onChange: (List<Player>) -> Unit) {
         players.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}

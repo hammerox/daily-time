@@ -6,16 +6,14 @@ import android.os.SystemClock
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.database.FirebaseDatabase
 import com.mcustodio.dailytime.FirebaseDB
 import com.mcustodio.dailytime.Preferences
 import com.mcustodio.dailytime.R
+import com.mcustodio.dailytime.ui.DbMockViewModel
 import kotlinx.android.synthetic.main.activity_timer.*
 
 class TimerActivity : AppCompatActivity() {
-
-    companion object {
-        const val playerKey = "playerKey"
-    }
 
     private val preferences by lazy { Preferences(this) }
     private var timeWhenStopped = 0L
@@ -49,9 +47,12 @@ class TimerActivity : AppCompatActivity() {
             }
         }
 
+        // todo - validar se está funcionando
         button_timer_save.setOnClickListener {
-            val userKey = intent.getStringExtra(playerKey)
-            FirebaseDB.players.child(userKey).updateChildren(hashMapOf("time" to timeWhenStopped as Any))
+            val dailyId = DbMockViewModel.selectedDaily.value?.id
+            val playerId = DbMockViewModel.selectedPlayer.value?.id
+            val reference = FirebaseDatabase.getInstance().getReference("dailies/$dailyId/players_time/")
+            reference.updateChildren(hashMapOf(playerId to timeWhenStopped as Any))
                 .addOnSuccessListener { finish() }
                 .addOnFailureListener { Toast.makeText(this, it.message, Toast.LENGTH_LONG).show() }
         }
