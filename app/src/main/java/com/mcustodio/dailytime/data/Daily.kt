@@ -1,4 +1,4 @@
-package com.mcustodio.dailytime
+package com.mcustodio.dailytime.data
 
 import com.google.firebase.database.Exclude
 import java.util.*

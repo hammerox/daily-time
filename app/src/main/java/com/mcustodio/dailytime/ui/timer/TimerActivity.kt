@@ -1,15 +1,21 @@
-package com.mcustodio.dailytime
+package com.mcustodio.dailytime.ui.timer
 
-import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
-import kotlinx.android.synthetic.main.timer_activity.*
+import com.mcustodio.dailytime.FirebaseDB
+import com.mcustodio.dailytime.Preferences
+import com.mcustodio.dailytime.R
+import kotlinx.android.synthetic.main.activity_timer.*
 
 class TimerActivity : AppCompatActivity() {
+
+    companion object {
+        const val playerKey = "playerKey"
+    }
 
     private val preferences by lazy { Preferences(this) }
     private var timeWhenStopped = 0L
@@ -17,7 +23,7 @@ class TimerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.timer_activity)
+        setContentView(R.layout.activity_timer)
 
         edit_timer_whatyoudid.setText(preferences.whatYouDid)
         edit_timer_whatyouwilldo.setText(preferences.whatYouWillDo)
@@ -44,8 +50,8 @@ class TimerActivity : AppCompatActivity() {
         }
 
         button_timer_save.setOnClickListener {
-            val userKey = intent.getStringExtra("userKey")
-            FirebaseDB.users.child(userKey).updateChildren(hashMapOf("time" to timeWhenStopped as Any))
+            val userKey = intent.getStringExtra(playerKey)
+            FirebaseDB.players.child(userKey).updateChildren(hashMapOf("time" to timeWhenStopped as Any))
                 .addOnSuccessListener { finish() }
                 .addOnFailureListener { Toast.makeText(this, it.message, Toast.LENGTH_LONG).show() }
         }
