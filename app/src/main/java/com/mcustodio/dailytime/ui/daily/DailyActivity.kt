@@ -12,6 +12,10 @@ import kotlinx.android.synthetic.main.activity_daily.*
 
 class DailyActivity : AppCompatActivity() {
 
+    companion object {
+        const val dailyKey = "dailyKey"
+    }
+
     private val adapter by lazy { DailyRecyclerAdapter() }
 
 

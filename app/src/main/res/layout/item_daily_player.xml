@@ -7,14 +7,14 @@
              android:padding="16dp">
 
     <TextView
-            android:id="@+id/text_mainitem_name"
+            android:id="@+id/text_dailyitem_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             tools:text="Nickname" />
 
     <TextView
-            android:id="@+id/text_mainitem_timer"
+            android:id="@+id/text_dailyitem_timer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|end"

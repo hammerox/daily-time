@@ -24,6 +24,11 @@ class Preferences(context: Context) {
         get() = prefs.getString(DIFFICULTIES, "")
         set(value) = prefs.edit().putString(DIFFICULTIES, value).apply()
 
+    private val LAST_SELECTED_TEAM = "LAST_SELECTED_TEAM"
+    var lastSelectedTeam: String?
+        get() = prefs.getString(LAST_SELECTED_TEAM, "")
+        set(value) = prefs.edit().putString(LAST_SELECTED_TEAM, value).apply()
+
 
     fun clearAll() {
         prefs.edit().clear().apply()

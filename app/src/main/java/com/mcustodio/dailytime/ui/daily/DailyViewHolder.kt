@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat
 
 class DailyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-    private val textName = view.text_mainitem_name
-    private val textTimer = view.text_mainitem_timer
+    private val textName = view.text_dailyitem_name
+    private val textTimer = view.text_dailyitem_timer
 
     fun setValues(player: Player) {
         textName.text = player.nickname
