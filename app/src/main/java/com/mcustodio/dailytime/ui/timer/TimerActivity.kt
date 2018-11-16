@@ -27,11 +27,14 @@ class TimerActivity : AppCompatActivity() {
         edit_timer_whatyouwilldo.setText(preferences.whatYouWillDo)
         edit_timer_difficulties.setText(preferences.difficulties)
 
-        DbMockViewModel.activeDaily.observe(this, Observer {
+        DbMockViewModel.selectedDaily.observe(this, Observer {
             // todo - Esconder layout caso activeDaily == null
             // todo - Adicionar botão comunitário para iniciar a daily
-            // todo - Adicionar botão admin para encerrar daily
+            // todo - Adicionar botão comunitário para encerrar daily
         })
+
+        timeWhenStopped = DbMockViewModel.getElappsedTime()
+        chronometer_timer.base = SystemClock.elapsedRealtime() - timeWhenStopped
 
         button_timer_startorpause.setOnClickListener {
             isRunning = !isRunning
@@ -41,7 +44,7 @@ class TimerActivity : AppCompatActivity() {
                 chronometer_timer.setTextColor(ContextCompat.getColor(this, R.color.red_500))
 
                 button_timer_startorpause.text = "PAUSE"
-                button_timer_save.visibility = View.INVISIBLE
+                button_timer_save.isEnabled = false
 
             } else {
                 timeWhenStopped = SystemClock.elapsedRealtime() - chronometer_timer.base
@@ -49,12 +52,12 @@ class TimerActivity : AppCompatActivity() {
                 chronometer_timer.setTextColor(ContextCompat.getColor(this, R.color.black))
 
                 button_timer_startorpause.text = "START"
-                button_timer_save.visibility = View.VISIBLE
+                button_timer_save.isEnabled = true
             }
         }
 
         button_timer_save.setOnClickListener {
-            val dailyId = DbMockViewModel.activeDaily.value?.id
+            val dailyId = DbMockViewModel.selectedDaily.value?.id
             val memberId = DbMockViewModel.selectedMember.value?.id
             val reference = FirebaseDatabase.getInstance().getReference("dailies/$dailyId/members_time/")
             reference.updateChildren(hashMapOf(memberId to timeWhenStopped as Any))
@@ -70,4 +73,7 @@ class TimerActivity : AppCompatActivity() {
         preferences.whatYouWillDo = edit_timer_whatyouwilldo.text.toString()
         preferences.difficulties = edit_timer_difficulties.text.toString()
     }
+
+
+
 }

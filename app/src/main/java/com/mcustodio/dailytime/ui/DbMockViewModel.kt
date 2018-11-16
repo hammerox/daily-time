@@ -57,6 +57,8 @@ object DbMockViewModel {
     }
 
 
+    // TeamListViewModel
+
     fun changeTeam(selectedTeam: Team) {
         val currentMember = DbMockViewModel.findMember(selectedTeam)
         this.selectedTeam.value = selectedTeam
@@ -67,6 +69,14 @@ object DbMockViewModel {
     fun findMember(team: Team) : Member? {
         val memberId = this.currentUser.value?.saved_teams_to_member?.get(team.id)
         return userMembers.value?.find { it.id == memberId }
+    }
+
+
+    // TimerViewModel
+
+    fun getElappsedTime() : Long {
+        val memberId = this.selectedMember.value?.id
+        return this.selectedDaily.value?.members_time?.get(memberId) ?: 0
     }
 
 }
