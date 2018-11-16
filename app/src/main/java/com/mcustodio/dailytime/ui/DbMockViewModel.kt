@@ -1,6 +1,7 @@
 package com.mcustodio.dailytime.ui
 
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
 import com.mcustodio.dailytime.FirebaseDB
 import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.data.Member
@@ -10,6 +11,8 @@ import com.mcustodio.dailytime.data.User
 object DbMockViewModel {
 
     val loginUser = MutableLiveData<User>()
+
+    val teams = MutableLiveData<List<Team>>()
     val selectedTeam = MutableLiveData<Team>()
 
     val dailies = MutableLiveData<List<Daily>>()
