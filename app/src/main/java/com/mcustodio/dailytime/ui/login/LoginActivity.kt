@@ -20,8 +20,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        Preferences(this).isLoggedIn = false
-
         button_login.setOnClickListener {
             val email = edit_login.text.toString().trim()
             validateUser(email)
@@ -34,39 +32,27 @@ class LoginActivity : AppCompatActivity() {
         if (wasAlreadyLoggedIn) {
             validateUser(Preferences(this).loginUserId!!)
         }
-
-        DbMockViewModel.loginUser.observe(this, Observer {user ->
-            if (isNotLoggedIn(user)) {
-                login(user!!)
-            }
-        })
     }
 
     fun validateUser(email: String) {
         FirebaseDB.setOnUserListener(email) { user ->
             user?.let {
-                DbMockViewModel.loginUser.value = user
+                login(user)
 
             } ?: Toast.makeText(this@LoginActivity, "Usuário não encontrado", Toast.LENGTH_LONG).show()
         }
     }
 
     fun login(user: User) {
-        Preferences(this).isLoggedIn = true
+        DbMockViewModel.saveAndFetchAllData(user)
         Preferences(this).loginUserId = user.email
-        DbMockViewModel.fetchAllData(user)
         val intent = Intent(this, DailyListActivity::class.java)
         startActivity(intent)
     }
 
     fun logout() {
-        Preferences(this).isLoggedIn = false
+        DbMockViewModel.currentUser.value = null
         Preferences(this).loginUserId = null
-        DbMockViewModel.loginUser.value = null
         FirebaseDB.removeAllListeners()
-    }
-
-    fun isNotLoggedIn(user: User?) : Boolean {
-        return user == null || Preferences(this).isLoggedIn?.not() ?: false
     }
 }

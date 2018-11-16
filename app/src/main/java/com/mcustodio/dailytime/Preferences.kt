@@ -9,11 +9,6 @@ class Preferences(context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, 0)
 
 
-    private val IS_LOGGED_IN = "IS_LOGGED_IN"
-    var isLoggedIn: Boolean?
-        get() = prefs.getBoolean(IS_LOGGED_IN, false)
-        set(value) = prefs.edit().putBoolean(IS_LOGGED_IN, value ?: false).apply()
-
     private val LOGIN_USER_ID = "LOGIN_USER_ID"
     var loginUserId: String?
         get() = prefs.getString(LOGIN_USER_ID, "")

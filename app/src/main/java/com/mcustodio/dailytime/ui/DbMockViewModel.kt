@@ -9,7 +9,7 @@ import com.mcustodio.dailytime.data.User
 
 object DbMockViewModel {
 
-    val loginUser = MutableLiveData<User>()
+    val currentUser = MutableLiveData<User>()
 
     val teams = MutableLiveData<List<Team>>()
     val selectedTeam = MutableLiveData<Team>()
@@ -25,7 +25,8 @@ object DbMockViewModel {
 
 
     // REPOSITORY
-    fun fetchAllData(user: User) {
+    fun saveAndFetchAllData(user: User) {
+        currentUser.value = user
         val teamsId = user.saved_teams_to_member.keys.toList()
 
         FirebaseDB.setOnTeamsListener(teamsId) { teams ->
