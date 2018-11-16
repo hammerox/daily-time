@@ -27,7 +27,7 @@ class DailyActivity : AppCompatActivity() {
             adapter.memberList = members?.filter { it.is_active ?: true } ?: listOf()
         })
 
-        DbMockViewModel.activeDaily.observe(this, Observer { daily ->
+        DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
             adapter.timeList = daily?.members_time ?: hashMapOf()
         })
 

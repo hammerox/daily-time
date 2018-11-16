@@ -24,18 +24,15 @@ class LoginActivity : AppCompatActivity() {
 
         button_login.setOnClickListener {
             val email = edit_login.text.toString().trim()
-            FirebaseDB.onLoginAttempt(email) { usersFound ->
-                usersFound.firstOrNull()?.let {
-                    observeUser(it.id!!)
-                } ?: Toast.makeText(this@LoginActivity, "Usuário não encontrado", Toast.LENGTH_LONG).show()
-            }
+            validateUser(email)
         }
 
-        val hasAlreadyLoggedIn = Preferences(this).loginUserId?.isNotBlank() == true
-        loading_login.visibility = if (hasAlreadyLoggedIn) View.VISIBLE else View.GONE
-        linear_login.visibility = if (!hasAlreadyLoggedIn) View.VISIBLE else View.GONE
-        if (hasAlreadyLoggedIn) {
-            observeUser(Preferences(this).loginUserId!!)
+        val wasAlreadyLoggedIn = Preferences(this).loginUserId?.isNotBlank() == true
+        loading_login.visibility = if (wasAlreadyLoggedIn) View.VISIBLE else View.GONE
+        linear_login.visibility = if (!wasAlreadyLoggedIn) View.VISIBLE else View.GONE
+
+        if (wasAlreadyLoggedIn) {
+            validateUser(Preferences(this).loginUserId!!)
         }
 
         DbMockViewModel.loginUser.observe(this, Observer {user ->
@@ -45,22 +42,28 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    fun observeUser(userId: String) {
-        FirebaseDB.onUserChange(userId)
+    fun validateUser(email: String) {
+        FirebaseDB.setOnUserListener(email) { user ->
+            user?.let {
+                DbMockViewModel.loginUser.value = user
+
+            } ?: Toast.makeText(this@LoginActivity, "Usuário não encontrado", Toast.LENGTH_LONG).show()
+        }
     }
 
     fun login(user: User) {
         Preferences(this).isLoggedIn = true
-        Preferences(this).loginUserId = user.id
+        Preferences(this).loginUserId = user.email
+        DbMockViewModel.fetchAllData(user)
         val intent = Intent(this, DailyListActivity::class.java)
         startActivity(intent)
     }
 
     fun logout() {
         Preferences(this).isLoggedIn = false
-        FirebaseDB.stopWatchingUser()
-        DbMockViewModel.loginUser.value = null
         Preferences(this).loginUserId = null
+        DbMockViewModel.loginUser.value = null
+        FirebaseDB.removeAllListeners()
     }
 
     fun isNotLoggedIn(user: User?) : Boolean {
