@@ -2,7 +2,7 @@ package com.mcustodio.dailytime
 
 import com.google.firebase.database.*
 import com.mcustodio.dailytime.data.Daily
-import com.mcustodio.dailytime.data.Player
+import com.mcustodio.dailytime.data.Member
 
 object FirebaseDB {
 
@@ -12,18 +12,18 @@ object FirebaseDB {
     val teams = root.child(teamsKey)
 
     // todo - Remover mock team_id = -LRAIWUKQjOqTwGsJD1o
-    val playersKey = "players"
-    val players = root.child(playersKey).orderByChild("team_id").equalTo("-LRAIWUKQjOqTwGsJD1o").ref
-    fun onPlayersChange(onChange: (List<Player>) -> Unit) {
-        players.addValueEventListener(object : ValueEventListener {
+    val membersKey = "members"
+    val members = root.child(membersKey).orderByChild("team_id").equalTo("-LRAIWUKQjOqTwGsJD1o").ref
+    fun onMembersChange(onChange: (List<Member>) -> Unit) {
+        members.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
             override fun onDataChange(data: DataSnapshot) {
-                val players = data.children.mapNotNull {
-                    val user = it.getValue(Player::class.java)
-                    user?.id = it.key
-                    user
+                val members = data.children.mapNotNull {
+                    val member = it.getValue(Member::class.java)
+                    member?.id = it.key
+                    member
                 }
-                onChange(players.toList())
+                onChange(members.toList())
             }
         })
     }

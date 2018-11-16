@@ -3,7 +3,7 @@ package com.mcustodio.dailytime.ui
 import android.arch.lifecycle.MutableLiveData
 import com.mcustodio.dailytime.FirebaseDB
 import com.mcustodio.dailytime.data.Daily
-import com.mcustodio.dailytime.data.Player
+import com.mcustodio.dailytime.data.Member
 import com.mcustodio.dailytime.data.Team
 
 object DbMockViewModel {
@@ -11,10 +11,11 @@ object DbMockViewModel {
     var selectedTeam = MutableLiveData<Team>()
 
     var dailies = MutableLiveData<List<Daily>>()
+    var activeDaily = MutableLiveData<Daily>()
     var selectedDaily = MutableLiveData<Daily>()
 
-    var players = MutableLiveData<List<Player>>()
-    var selectedPlayer = MutableLiveData<Player>()
+    var members = MutableLiveData<List<Member>>()
+    var selectedMember = MutableLiveData<Member>()
 
 
     init {
@@ -23,14 +24,15 @@ object DbMockViewModel {
 
         FirebaseDB.onDailiesChange {
             dailies.value = it
+            activeDaily.value = dailies.value?.find { it.time_start != null && it.time_end == null }
             if (selectedDaily.value?.id != null) {
                 val newSelectedDaily = dailies.value?.find { it.id == selectedDaily.value?.id }
                 selectedDaily.postValue(newSelectedDaily)
             }
         }
 
-        FirebaseDB.onPlayersChange {
-            players.postValue(it)
+        FirebaseDB.onMembersChange {
+            members.postValue(it)
         }
     }
 

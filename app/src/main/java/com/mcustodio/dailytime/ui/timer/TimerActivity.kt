@@ -1,5 +1,6 @@
 package com.mcustodio.dailytime.ui.timer
 
+import android.arch.lifecycle.Observer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -7,7 +8,6 @@ import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
-import com.mcustodio.dailytime.FirebaseDB
 import com.mcustodio.dailytime.Preferences
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.ui.DbMockViewModel
@@ -26,6 +26,12 @@ class TimerActivity : AppCompatActivity() {
         edit_timer_whatyoudid.setText(preferences.whatYouDid)
         edit_timer_whatyouwilldo.setText(preferences.whatYouWillDo)
         edit_timer_difficulties.setText(preferences.difficulties)
+
+        DbMockViewModel.activeDaily.observe(this, Observer {
+            // todo - Esconder layout caso activeDaily == null
+            // todo - Adicionar botão comunitário para iniciar a daily
+            // todo - Adicionar botão admin para encerrar daily
+        })
 
         button_timer_startorpause.setOnClickListener {
             isRunning = !isRunning
@@ -47,12 +53,11 @@ class TimerActivity : AppCompatActivity() {
             }
         }
 
-        // todo - validar se está funcionando
         button_timer_save.setOnClickListener {
-            val dailyId = DbMockViewModel.selectedDaily.value?.id
-            val playerId = DbMockViewModel.selectedPlayer.value?.id
-            val reference = FirebaseDatabase.getInstance().getReference("dailies/$dailyId/players_time/")
-            reference.updateChildren(hashMapOf(playerId to timeWhenStopped as Any))
+            val dailyId = DbMockViewModel.activeDaily.value?.id
+            val memberId = DbMockViewModel.selectedMember.value?.id
+            val reference = FirebaseDatabase.getInstance().getReference("dailies/$dailyId/members_time/")
+            reference.updateChildren(hashMapOf(memberId to timeWhenStopped as Any))
                 .addOnSuccessListener { finish() }
                 .addOnFailureListener { Toast.makeText(this, it.message, Toast.LENGTH_LONG).show() }
         }

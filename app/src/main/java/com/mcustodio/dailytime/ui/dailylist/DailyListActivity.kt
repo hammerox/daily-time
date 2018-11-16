@@ -29,18 +29,16 @@ class DailyListActivity : AppCompatActivity() {
         })
 
         adapter.onItemClick = {
+            // todo - Salvar informações do usuário atual
+            // todo - Se user não for admin -> TimerActivity
+            // todo - Renomear Member para Member
             openDailyPage(it)
         }
 
         fab_dailylist.setOnClickListener {
             val newDaily = Daily.create(DbMockViewModel.selectedTeam.value)
-            val newReference = FirebaseDB.dailies.ref.push()
-            val newKey = newReference.key
-            newReference.setValue(newDaily)
-                .addOnSuccessListener {
-                    newDaily.id = newKey
-                    openDailyPage(newDaily)
-                }
+            FirebaseDB.dailies.ref.push().setValue(newDaily)
+                .addOnSuccessListener {}
                 .addOnFailureListener { Toast.makeText(this, it.message, Toast.LENGTH_LONG).show() }
         }
     }

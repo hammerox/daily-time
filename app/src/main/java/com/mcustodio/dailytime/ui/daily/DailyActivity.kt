@@ -5,8 +5,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import com.mcustodio.dailytime.ui.addplayer.AddPlayerActivity
-import com.mcustodio.dailytime.FirebaseDB
+import com.mcustodio.dailytime.ui.addmember.AddMemberActivity
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.ui.DbMockViewModel
 import com.mcustodio.dailytime.ui.timer.TimerActivity
@@ -21,25 +20,25 @@ class DailyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daily)
 
-        recycler_main.layoutManager = LinearLayoutManager(this)
-        recycler_main.adapter = adapter
+        recycler_daily.layoutManager = LinearLayoutManager(this)
+        recycler_daily.adapter = adapter
 
-        DbMockViewModel.players.observe(this, Observer { players ->
-            adapter.playerList = players?.filter { it.is_active ?: true } ?: listOf()
+        DbMockViewModel.members.observe(this, Observer { members ->
+            adapter.memberList = members?.filter { it.is_active ?: true } ?: listOf()
         })
 
-        DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
-            adapter.timeList = daily?.players_time ?: hashMapOf()
+        DbMockViewModel.activeDaily.observe(this, Observer { daily ->
+            adapter.timeList = daily?.members_time ?: hashMapOf()
         })
 
         adapter.onItemClick = {
-            DbMockViewModel.selectedPlayer.value = it
+            DbMockViewModel.selectedMember.value = it
             val intent = Intent(this, TimerActivity::class.java)
             startActivity(intent)
         }
 
-        fab_main.setOnClickListener {
-            val intent = Intent(this, AddPlayerActivity::class.java)
+        fab_daily.setOnClickListener {
+            val intent = Intent(this, AddMemberActivity::class.java)
             startActivity(intent)
         }
     }

@@ -13,7 +13,7 @@
         </activity>
         <activity android:name=".ui.timer.TimerActivity">
         </activity>
-        <activity android:name=".ui.addplayer.AddPlayerActivity">
+        <activity android:name=".ui.addmember.AddMemberActivity">
         </activity>
         <activity android:name=".ui.dailylist.DailyListActivity">
             <intent-filter>
