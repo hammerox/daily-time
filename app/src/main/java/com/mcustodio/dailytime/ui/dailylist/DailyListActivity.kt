@@ -29,9 +29,7 @@ class DailyListActivity : AppCompatActivity() {
         })
 
         adapter.onItemClick = {
-            // todo - Salvar informações do usuário atual
             // todo - Se user não for admin -> TimerActivity
-            // todo - Renomear Member para Member
             openDailyPage(it)
         }
 

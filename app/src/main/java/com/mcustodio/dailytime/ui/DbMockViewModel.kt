@@ -5,17 +5,19 @@ import com.mcustodio.dailytime.FirebaseDB
 import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.data.Member
 import com.mcustodio.dailytime.data.Team
+import com.mcustodio.dailytime.data.User
 
 object DbMockViewModel {
 
-    var selectedTeam = MutableLiveData<Team>()
+    val loginUser = MutableLiveData<User>()
+    val selectedTeam = MutableLiveData<Team>()
 
-    var dailies = MutableLiveData<List<Daily>>()
-    var activeDaily = MutableLiveData<Daily>()
-    var selectedDaily = MutableLiveData<Daily>()
+    val dailies = MutableLiveData<List<Daily>>()
+    val activeDaily = MutableLiveData<Daily>()
+    val selectedDaily = MutableLiveData<Daily>()
 
-    var members = MutableLiveData<List<Member>>()
-    var selectedMember = MutableLiveData<Member>()
+    val members = MutableLiveData<List<Member>>()
+    val selectedMember = MutableLiveData<Member>()
 
 
     init {

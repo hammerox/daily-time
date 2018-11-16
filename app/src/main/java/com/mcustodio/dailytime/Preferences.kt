@@ -9,6 +9,21 @@ class Preferences(context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, 0)
 
 
+    private val IS_LOGGED_IN = "IS_LOGGED_IN"
+    var isLoggedIn: Boolean?
+        get() = prefs.getBoolean(IS_LOGGED_IN, false)
+        set(value) = prefs.edit().putBoolean(IS_LOGGED_IN, value ?: false).apply()
+
+    private val LOGIN_USER_ID = "LOGIN_USER_ID"
+    var loginUserId: String?
+        get() = prefs.getString(LOGIN_USER_ID, "")
+        set(value) = prefs.edit().putString(LOGIN_USER_ID, value).apply()
+
+    private val LAST_SELECTED_TEAM = "LAST_SELECTED_TEAM"
+    var lastSelectedTeam: String?
+        get() = prefs.getString(LAST_SELECTED_TEAM, "")
+        set(value) = prefs.edit().putString(LAST_SELECTED_TEAM, value).apply()
+
     private val WHAT_YOU_DID = "WHAT_YOU_DID"
     var whatYouDid: String?
         get() = prefs.getString(WHAT_YOU_DID, "")
@@ -23,11 +38,6 @@ class Preferences(context: Context) {
     var difficulties: String?
         get() = prefs.getString(DIFFICULTIES, "")
         set(value) = prefs.edit().putString(DIFFICULTIES, value).apply()
-
-    private val LAST_SELECTED_TEAM = "LAST_SELECTED_TEAM"
-    var lastSelectedTeam: String?
-        get() = prefs.getString(LAST_SELECTED_TEAM, "")
-        set(value) = prefs.edit().putString(LAST_SELECTED_TEAM, value).apply()
 
 
     fun clearAll() {

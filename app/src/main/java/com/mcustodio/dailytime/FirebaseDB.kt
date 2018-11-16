@@ -3,10 +3,49 @@ package com.mcustodio.dailytime
 import com.google.firebase.database.*
 import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.data.Member
+import com.mcustodio.dailytime.data.User
+import com.mcustodio.dailytime.ui.DbMockViewModel
 
 object FirebaseDB {
 
     val root = FirebaseDatabase.getInstance().reference
+
+    val usersKey = "users"
+    val users = root.child(usersKey)
+    var loginUserReference: DatabaseReference? = null
+    var loginUserListener: ValueEventListener? = null
+
+    fun onLoginAttempt(email: String, onResult: (List<User>) -> Unit) {
+        FirebaseDB.users.orderByChild("email").equalTo(email)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) { }
+                override fun onDataChange(data: DataSnapshot) {
+                    val users = data.children.mapNotNull {
+                        val user = it.getValue(User::class.java)
+                        user?.id = it.key
+                        user
+                    }
+                    onResult(users)
+                }
+            })
+    }
+
+    fun onUserChange(userId: String) {
+        loginUserListener = object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) { }
+            override fun onDataChange(data: DataSnapshot) {
+                val user = data.getValue(User::class.java)
+                user?.id = data.key
+                DbMockViewModel.loginUser.value = user
+            }
+        }
+        loginUserReference = FirebaseDatabase.getInstance().getReference("users/$userId")
+        loginUserReference?.addValueEventListener(loginUserListener!!)
+    }
+
+    fun stopWatchingUser() {
+        loginUserReference?.removeEventListener(loginUserListener!!)
+    }
 
     val teamsKey = "teams"
     val teams = root.child(teamsKey)
