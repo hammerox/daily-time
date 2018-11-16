@@ -4,8 +4,8 @@ import com.google.firebase.database.Exclude
 
 data class Member(var nickname: String? = null,
                   var team_id: String? = null,
-                  var is_admin: Boolean? = false,
-                  var is_active: Boolean? = true,
+                  var admin: Boolean? = false,
+                  var active: Boolean? = true,
                   @set:Exclude @get:Exclude var id: String? = null) {
 
 }

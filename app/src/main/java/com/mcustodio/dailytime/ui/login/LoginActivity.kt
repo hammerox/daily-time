@@ -12,6 +12,7 @@ import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.data.User
 import com.mcustodio.dailytime.ui.DbMockViewModel
 import com.mcustodio.dailytime.ui.dailylist.DailyListActivity
+import com.mcustodio.dailytime.ui.teamlist.TeamListActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -46,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
     fun login(user: User) {
         DbMockViewModel.saveAndFetchAllData(user)
         Preferences(this).loginUserId = user.email
-        val intent = Intent(this, DailyListActivity::class.java)
+        val intent = Intent(this, TeamListActivity::class.java)
         startActivity(intent)
     }
 

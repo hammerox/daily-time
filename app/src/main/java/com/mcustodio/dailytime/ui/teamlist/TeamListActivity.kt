@@ -9,6 +9,7 @@ import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.data.Team
 import com.mcustodio.dailytime.ui.DbMockViewModel
 import com.mcustodio.dailytime.ui.dailylist.DailyListActivity
+import com.mcustodio.dailytime.ui.timer.TimerActivity
 import kotlinx.android.synthetic.main.activity_teamlist.*
 
 class TeamListActivity : AppCompatActivity() {
@@ -26,15 +27,13 @@ class TeamListActivity : AppCompatActivity() {
             adapter.teamList = it ?: listOf()
         })
 
-        adapter.onItemClick = {
-            // todo - Se user não for admin -> TimerActivity
-            openTeamPage(it)
+        adapter.onItemClick = {selectedTeam ->
+            DbMockViewModel.changeTeam(selectedTeam)
+            val intent = when (DbMockViewModel.selectedMember.value?.admin) {
+                true -> Intent(this, DailyListActivity::class.java)
+                else -> Intent(this, TimerActivity::class.java)
+            }
+            startActivity(intent)
         }
-    }
-
-    fun openTeamPage(selectedTeam: Team) {
-        DbMockViewModel.selectedTeam.value = selectedTeam
-        val intent = Intent(this, DailyListActivity::class.java)
-        startActivity(intent)
     }
 }

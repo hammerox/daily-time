@@ -24,7 +24,7 @@ class DailyActivity : AppCompatActivity() {
         recycler_daily.adapter = adapter
 
         DbMockViewModel.members.observe(this, Observer { members ->
-            adapter.memberList = members?.filter { it.is_active ?: true } ?: listOf()
+            adapter.memberList = members?.filter { it.active ?: true } ?: listOf()
         })
 
         DbMockViewModel.selectedDaily.observe(this, Observer { daily ->

@@ -56,4 +56,17 @@ object DbMockViewModel {
         }
     }
 
+
+    fun changeTeam(selectedTeam: Team) {
+        val currentMember = DbMockViewModel.findMember(selectedTeam)
+        this.selectedTeam.value = selectedTeam
+        this.selectedMember.value = currentMember
+    }
+
+
+    fun findMember(team: Team) : Member? {
+        val memberId = this.currentUser.value?.saved_teams_to_member?.get(team.id)
+        return userMembers.value?.find { it.id == memberId }
+    }
+
 }
