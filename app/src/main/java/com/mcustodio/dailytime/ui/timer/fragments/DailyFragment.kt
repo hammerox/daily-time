@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.fragment_timer_daily.view.*
 
 class DailyFragment : Fragment() {
 
-    private var timeWhenStopped = 0L
     private var isRunning = false
     private val handler = Handler()
     private var totalElapsedTime:Long = 0

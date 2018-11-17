@@ -5,10 +5,9 @@
              android:layout_height="match_parent"
              tools:context=".ui.timer.fragments.TeamFragment">
     
-    <TextView
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_timerteam"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Equipe"/>
+            android:layout_height="match_parent" />
 
 </FrameLayout>
