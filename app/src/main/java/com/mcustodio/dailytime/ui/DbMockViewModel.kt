@@ -66,6 +66,7 @@ object DbMockViewModel {
         this.selectedTeam.value = selectedTeam
         this.selectedMember.value = currentMember
         this.isAdmin.value = currentMember?.admin ?: false
+        this.selectedDaily.value = dailies.value?.find { it.team_id == selectedTeam.id && it.time_start != null && it.time_end == null }
     }
 
 
