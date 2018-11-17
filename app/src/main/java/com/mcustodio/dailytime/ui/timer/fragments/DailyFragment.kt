@@ -37,7 +37,8 @@ class DailyFragment : Fragment() {
 
         totalElapsedTime = DbMockViewModel.getElapsedTime()
         view.text_timerdaily_timer.setTime()
-        view?.text_timerdaily_milli?.setMilliseconds()
+        view.text_timerdaily_milli.setMilliseconds()
+        view.text_timerdaily_member.text = DbMockViewModel.selectedMember.value?.nickname
 
         view.linear_timerdaily.setOnClickListener {
             isRunning = !isRunning
