@@ -5,9 +5,17 @@
         android:padding="16dp">
 
     <TextView
-            android:id="@+id/text_dailylist"
+            android:id="@+id/text_dailylist_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:text="Daily 01"
             android:gravity="center_vertical" />
+
+    <TextView
+            android:id="@+id/text_dailylist_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="0:00"
+            android:gravity="center_vertical|end" />
 
 </FrameLayout>

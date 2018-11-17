@@ -89,13 +89,6 @@ object DbMockViewModel {
         return this.selectedDaily.value?.members_time?.get(memberId) ?: 0
     }
 
-    fun saveTime(time: Long): Task<Void> {
-        val dailyId = selectedDaily.value?.id
-        val memberId = selectedMember.value?.id
-        val reference = FirebaseDB.instance.getReference("dailies/$dailyId/members_time/")
-        return reference.updateChildren(hashMapOf(memberId to time as Any))
-    }
-
     fun isSpeaking(isSpeaking: Boolean): Task<Void> {
         val memberId = selectedMember.value?.id
         val reference = FirebaseDB.instance.getReference("members/$memberId/")
@@ -108,10 +101,18 @@ object DbMockViewModel {
     }
 
     fun closeDaily(): Task<Void> {
+        val daily = selectedDaily.value
+        daily?.time_end = Calendar.getInstance().time
+        val values = hashMapOf("time_end" to daily?.time_end as Any, "status" to daily.status)
+        val reference = FirebaseDB.instance.getReference("dailies/${daily.id}/")
+        return reference.updateChildren(values)
+    }
+
+    fun saveMemberTime(time: Long): Task<Void> {
         val dailyId = selectedDaily.value?.id
-        val currentTime = Calendar.getInstance().time
-        val reference = FirebaseDB.instance.getReference("dailies/$dailyId/")
-        return reference.updateChildren(hashMapOf("time_end" to currentTime as Any))
+        val memberId = selectedMember.value?.id
+        val reference = FirebaseDB.instance.getReference("dailies/$dailyId/members_time/")
+        return reference.updateChildren(hashMapOf(memberId to time as Any))
     }
 
 }

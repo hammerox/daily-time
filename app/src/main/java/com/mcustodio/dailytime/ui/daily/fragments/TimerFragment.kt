@@ -70,7 +70,7 @@ class TimerFragment : Fragment() {
             } else {
                 view.text_dailytimer_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.black))
                 handler.removeCallbacks(onClockTick)
-                DbMockViewModel.saveTime(totalElapsedTime)
+                DbMockViewModel.saveMemberTime(totalElapsedTime)
                 DbMockViewModel.isSpeaking(false)
             }
         }
