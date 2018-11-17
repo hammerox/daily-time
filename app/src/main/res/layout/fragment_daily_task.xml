@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="16dp"
-        tools:context=".ui.timer.fragments.TaskFragment">
+        tools:context=".ui.daily.fragments.TaskFragment">
     
     <TextView
             android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
             android:text="O que você fez?"/>
     
     <EditText
-            android:id="@+id/edit_timertask_whatyoudid"
+            android:id="@+id/edit_dailytask_whatyoudid"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -30,7 +30,7 @@
             android:text="O que você vai fazer?"/>
     
     <EditText
-            android:id="@+id/edit_timertask_whatyouwilldo"
+            android:id="@+id/edit_dailytask_whatyouwilldo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -44,7 +44,7 @@
             android:text="Impedimentos?"/>
     
     <EditText
-            android:id="@+id/edit_timertask_difficulties"
+            android:id="@+id/edit_dailytask_difficulties"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

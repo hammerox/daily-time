@@ -3,7 +3,7 @@ package com.mcustodio.dailytime.ui.teamlist
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.mcustodio.dailytime.data.Team
-import kotlinx.android.synthetic.main.item_teamlistitem_team.view.*
+import kotlinx.android.synthetic.main.item_teamlist_team.view.*
 
 class TeamListViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

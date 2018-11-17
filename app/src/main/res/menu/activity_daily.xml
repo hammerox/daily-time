@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     
     <item
-            android:id="@+id/item_newtimer_task"
+            android:id="@+id/item_daily_task"
             android:icon="@drawable/ic_checkbox_black_24dp"
             android:title="Tarefas"/>
     
     <item
-            android:id="@+id/item_newtimer_daily"
+            android:id="@+id/item_daily_timer"
             android:icon="@drawable/ic_timer_black_24dp"
-            android:title="Daily"/>
+            android:title="Timer"/>
     
     <item
-            android:id="@+id/item_newtimer_team"
+            android:id="@+id/item_daily_team"
             android:icon="@drawable/ic_team_black_24dp"
             android:title="Equipe"/>
 

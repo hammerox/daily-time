@@ -1,4 +1,4 @@
-package com.mcustodio.dailytime.ui.timer.fragments.teamadapter
+package com.mcustodio.dailytime.ui.daily.fragments.teamadapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

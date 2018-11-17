@@ -1,4 +1,4 @@
-package com.mcustodio.dailytime.ui.timer.fragments.teamadapter
+package com.mcustodio.dailytime.ui.daily.fragments.teamadapter
 
 import android.graphics.Typeface
 import android.support.v4.content.ContextCompat
@@ -11,9 +11,9 @@ import java.text.SimpleDateFormat
 
 class TeamViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-    private val textName = view.text_timerteam_name
-    private val textTimer = view.text_timerteam_timer
-    private val speakingImage = view.image_timeritem_speaking
+    private val textName = view.text_dailyteam_name
+    private val textTimer = view.text_dailyteam_timer
+    private val speakingImage = view.image_dailyitem_speaking
 
     private val highlightColor = ContextCompat.getColor(view.context, R.color.colorPrimary)
     private val normalColor = ContextCompat.getColor(view.context, android.R.color.tab_indicator_text)

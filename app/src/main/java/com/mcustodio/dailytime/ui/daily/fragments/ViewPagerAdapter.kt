@@ -1,4 +1,4 @@
-package com.mcustodio.dailytime.ui.timer.fragments
+package com.mcustodio.dailytime.ui.daily.fragments
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

@@ -7,21 +7,21 @@
              android:padding="16dp">
     
     <TextView
-            android:id="@+id/text_timerteam_name"
+            android:id="@+id/text_dailyteam_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             tools:text="Nickname" />
     
     <TextView
-            android:id="@+id/text_timerteam_timer"
+            android:id="@+id/text_dailyteam_timer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|end"
             tools:text="1m37" />
     
     <ImageView
-            android:id="@+id/image_timeritem_speaking"
+            android:id="@+id/image_dailyitem_speaking"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|end"

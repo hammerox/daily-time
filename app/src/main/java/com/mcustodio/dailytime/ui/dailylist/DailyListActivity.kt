@@ -28,9 +28,10 @@ class DailyListActivity : AppCompatActivity() {
             adapter.dailyList = it ?: listOf()
         })
 
-        adapter.onItemClick = {
-            // todo - Se user não for admin -> TimerActivity
-            openDailyPage(it)
+        adapter.onItemClick = {selectedDaily ->
+            DbMockViewModel.selectedDaily.value = selectedDaily
+            val intent = Intent(this, DailyActivity::class.java)
+            startActivity(intent)
         }
 
         fab_dailylist.setOnClickListener {
@@ -41,9 +42,4 @@ class DailyListActivity : AppCompatActivity() {
         }
     }
 
-    fun openDailyPage(selectedDaily: Daily) {
-        DbMockViewModel.selectedDaily.value = selectedDaily
-        val intent = Intent(this, DailyActivity::class.java)
-        startActivity(intent)
-    }
 }

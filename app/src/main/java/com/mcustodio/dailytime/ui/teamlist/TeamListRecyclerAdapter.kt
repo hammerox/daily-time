@@ -19,7 +19,7 @@ class TeamListRecyclerAdapter(var onItemClick: ((Team) -> Unit)? = null) : Recyc
     override fun getItemCount(): Int = teamList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): TeamListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_teamlistitem_team, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_teamlist_team, parent, false)
         return TeamListViewHolder(view)
     }
 

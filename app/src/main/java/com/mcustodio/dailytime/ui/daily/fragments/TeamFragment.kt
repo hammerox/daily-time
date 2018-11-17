@@ -1,8 +1,7 @@
-package com.mcustodio.dailytime.ui.timer.fragments
+package com.mcustodio.dailytime.ui.daily.fragments
 
 
 import android.arch.lifecycle.Observer
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -13,8 +12,8 @@ import android.widget.Toast
 
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.ui.DbMockViewModel
-import com.mcustodio.dailytime.ui.timer.fragments.teamadapter.TeamRecyclerAdapter
-import kotlinx.android.synthetic.main.fragment_timer_team.view.*
+import com.mcustodio.dailytime.ui.daily.fragments.teamadapter.TeamRecyclerAdapter
+import kotlinx.android.synthetic.main.fragment_daily_team.view.*
 
 
 class TeamFragment : Fragment() {
@@ -25,10 +24,10 @@ class TeamFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_timer_team, container, false)
+        val view = inflater.inflate(R.layout.fragment_daily_team, container, false)
 
-        view.recycler_timerteam.layoutManager = LinearLayoutManager(activity)
-        view.recycler_timerteam.adapter = adapter
+        view.recycler_dailyteam.layoutManager = LinearLayoutManager(activity)
+        view.recycler_dailyteam.adapter = adapter
 
         DbMockViewModel.members.observe(this, Observer { members ->
             adapter.memberList = members?.filter { it.team_id == DbMockViewModel.selectedTeam.value?.id ?: false }

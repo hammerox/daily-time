@@ -1,4 +1,4 @@
-package com.mcustodio.dailytime.ui.timer.fragments
+package com.mcustodio.dailytime.ui.daily.fragments
 
 
 import android.arch.lifecycle.Observer
@@ -11,15 +11,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import com.google.firebase.database.FirebaseDatabase
 
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.ui.DbMockViewModel
-import kotlinx.android.synthetic.main.fragment_timer_daily.view.*
+import kotlinx.android.synthetic.main.fragment_daily_timer.view.*
 
 
-class DailyFragment : Fragment() {
+class TimerFragment : Fragment() {
 
     private var isRunning = false
     private val handler = Handler()
@@ -33,23 +31,23 @@ class DailyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_timer_daily, container, false)
+        val view = inflater.inflate(R.layout.fragment_daily_timer, container, false)
 
         totalElapsedTime = DbMockViewModel.getElapsedTime()
-        view.text_timerdaily_timer.setTime()
-        view.text_timerdaily_milli.setMilliseconds()
+        view.text_dailytimer_timer.setTime()
+        view.text_dailytimer_milli.setMilliseconds()
 
-        view.linear_timerdaily.setOnClickListener {
+        view.linear_dailytimer.setOnClickListener {
             isRunning = !isRunning
 
             if (isRunning) {
-                view.text_timerdaily_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.red_500))
+                view.text_dailytimer_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.red_500))
                 startTime = SystemClock.uptimeMillis()
                 handler.postDelayed(runnable, 0)
                 DbMockViewModel.isSpeaking(true)
 
             } else {
-                view.text_timerdaily_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.black))
+                view.text_dailytimer_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.black))
                 handler.removeCallbacks(runnable)
                 DbMockViewModel.saveTime(totalElapsedTime)
                 DbMockViewModel.isSpeaking(false)
@@ -57,7 +55,7 @@ class DailyFragment : Fragment() {
         }
 
         DbMockViewModel.selectedMember.observe(this, Observer {
-            view.text_timerdaily_member.text = it?.nickname ?: ""
+            view.text_dailytimer_member.text = it?.nickname ?: ""
         })
 
         return view
@@ -83,8 +81,8 @@ class DailyFragment : Fragment() {
             deltaTime = SystemClock.uptimeMillis() - startTime
             totalElapsedTime += deltaTime
             startTime = SystemClock.uptimeMillis()
-            view?.text_timerdaily_timer?.setTime()
-            view?.text_timerdaily_milli?.setMilliseconds()
+            view?.text_dailytimer_timer?.setTime()
+            view?.text_dailytimer_milli?.setMilliseconds()
 
             handler.postDelayed(this, 0)
         }

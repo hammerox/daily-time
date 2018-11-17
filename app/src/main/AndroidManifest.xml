@@ -16,17 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.daily.DailyActivity">
-        </activity>
-        <activity android:name=".ui.timer.TimerActivity">
-        </activity>
         <activity android:name=".ui.addmember.AddMemberActivity">
         </activity>
         <activity android:name=".ui.dailylist.DailyListActivity">
         </activity>
         <activity android:name=".ui.teamlist.TeamListActivity">
         </activity>
-        <activity android:name=".ui.timer.NewTimerActivity">
+        <activity android:name=".ui.daily.DailyActivity">
         </activity>
     </application>
 

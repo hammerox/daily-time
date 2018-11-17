@@ -1,47 +1,63 @@
 package com.mcustodio.dailytime.ui.daily
 
-import android.arch.lifecycle.Observer
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import com.mcustodio.dailytime.ui.addmember.AddMemberActivity
+import android.support.design.widget.BottomNavigationView
+import android.support.v4.view.ViewPager
+import android.support.v7.app.AppCompatActivity
 import com.mcustodio.dailytime.R
-import com.mcustodio.dailytime.ui.DbMockViewModel
-import com.mcustodio.dailytime.ui.timer.NewTimerActivity
-import com.mcustodio.dailytime.ui.timer.TimerActivity
+import com.mcustodio.dailytime.ui.daily.fragments.TaskFragment
+import com.mcustodio.dailytime.ui.daily.fragments.TeamFragment
+import com.mcustodio.dailytime.ui.daily.fragments.TimerFragment
+import com.mcustodio.dailytime.ui.daily.fragments.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_daily.*
 
 class DailyActivity : AppCompatActivity() {
 
-    private val adapter by lazy { DailyRecyclerAdapter() }
-
+    private val pagerAdapter by lazy { ViewPagerAdapter(supportFragmentManager) }
+    private val taskFragment = TaskFragment()
+    private val timerFragment = TimerFragment()
+    private val teamFragment = TeamFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daily)
-
-        recycler_daily.layoutManager = LinearLayoutManager(this)
-        recycler_daily.adapter = adapter
-
-        DbMockViewModel.members.observe(this, Observer { members ->
-            adapter.memberList = members?.filter { it.active ?: true } ?: listOf()
-        })
-
-        DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
-            adapter.timeList = daily?.members_time ?: hashMapOf()
-        })
-
-        adapter.onItemClick = {
-            DbMockViewModel.selectedMember.value = it
-            val intent = Intent(this, NewTimerActivity::class.java)
-            startActivity(intent)
-        }
-
-        fab_daily.setOnClickListener {
-            val intent = Intent(this, AddMemberActivity::class.java)
-            startActivity(intent)
-        }
+        bottomnav_daily.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        setupViewPager()
     }
 
+    private fun setupViewPager() {
+        pagerAdapter.fragmentList.add(taskFragment)
+        pagerAdapter.fragmentList.add(timerFragment)
+        pagerAdapter.fragmentList.add(teamFragment)
+        viewpager_daily.adapter = pagerAdapter
+        viewpager_daily.addOnPageChangeListener(onViewPagerTabSelectedListener)
+        viewpager_daily.currentItem = 1
+    }
+
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.item_daily_task -> {
+                viewpager_daily.currentItem = 0
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.item_daily_timer -> {
+                viewpager_daily.currentItem = 1
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.item_daily_team -> {
+                viewpager_daily.currentItem = 2
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
+
+    private val onViewPagerTabSelectedListener = object : ViewPager.OnPageChangeListener {
+        override fun onPageScrollStateChanged(p0: Int) { }
+        override fun onPageScrolled(p0: Int, p1: Float, p2: Int) { }
+        override fun onPageSelected(pos: Int) {
+            bottomnav_daily.menu.getItem(pos).isChecked = true
+        }
+
+    }
 }

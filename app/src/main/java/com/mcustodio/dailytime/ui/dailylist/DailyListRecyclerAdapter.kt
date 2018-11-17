@@ -23,7 +23,7 @@ class DailyListRecyclerAdapter(var onItemClick: ((Daily) -> Unit)? = null) : Rec
     override fun getItemCount(): Int = dailyList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): DailyListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_dailylistitem_daily, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_dailylist_daily, parent, false)
         return DailyListViewHolder(view)
     }
 

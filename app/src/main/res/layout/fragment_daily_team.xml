@@ -3,10 +3,10 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".ui.timer.fragments.TeamFragment">
+             tools:context=".ui.daily.fragments.TeamFragment">
     
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_timerteam"
+            android:id="@+id/recycler_dailyteam"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
