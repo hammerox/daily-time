@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.mcustodio.dailytime.ui.addmember.AddMemberActivity
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.ui.DbMockViewModel
+import com.mcustodio.dailytime.ui.timer.NewTimerActivity
 import com.mcustodio.dailytime.ui.timer.TimerActivity
 import kotlinx.android.synthetic.main.activity_daily.*
 
@@ -33,7 +34,7 @@ class DailyActivity : AppCompatActivity() {
 
         adapter.onItemClick = {
             DbMockViewModel.selectedMember.value = it
-            val intent = Intent(this, TimerActivity::class.java)
+            val intent = Intent(this, NewTimerActivity::class.java)
             startActivity(intent)
         }
 
