@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import com.mcustodio.dailytime.R
+import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.ui.DbMockViewModel
 import kotlinx.android.synthetic.main.fragment_daily_timer.view.*
 
@@ -56,6 +57,12 @@ class TimerFragment : Fragment() {
 
         DbMockViewModel.selectedMember.observe(this, Observer {
             view.text_dailytimer_member.text = it?.nickname ?: ""
+        })
+
+        DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
+            view.text_dailytimer_notstarted.visibility = if (daily?.status == Daily.Status.NotStarted) View.VISIBLE else View.GONE
+            view.linear_dailytimer.visibility = if (daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
+            view.text_dailytimer_finished.visibility = if (daily?.status == Daily.Status.Finished) View.VISIBLE else View.GONE
         })
 
         return view

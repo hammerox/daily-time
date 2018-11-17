@@ -16,7 +16,6 @@ object DbMockViewModel {
     val selectedTeam = MutableLiveData<Team>()
 
     val dailies = MutableLiveData<List<Daily>>()
-    val activeDaily = MutableLiveData<Daily>()
     val selectedDaily = MutableLiveData<Daily>()
 
     val userMembers = MutableLiveData<List<Member>>()
@@ -50,7 +49,6 @@ object DbMockViewModel {
     private fun fetchDailies(user: User, teamsId: List<String>) {
         FirebaseDB.setOnDailiesListener(teamsId) {
             dailies.value = it
-            activeDaily.value = dailies.value?.find { it.time_start != null && it.time_end == null }
             if (selectedDaily.value?.id != null) {
                 val newSelectedDaily = dailies.value?.find { it.id == selectedDaily.value?.id }
                 selectedDaily.postValue(newSelectedDaily)
@@ -66,7 +64,7 @@ object DbMockViewModel {
         this.selectedTeam.value = selectedTeam
         this.selectedMember.value = currentMember
         this.isAdmin.value = currentMember?.admin ?: false
-        this.selectedDaily.value = dailies.value?.find { it.team_id == selectedTeam.id && it.time_start != null && it.time_end == null }
+        this.selectedDaily.value = dailies.value?.find { d -> d.team_id == selectedTeam.id && d.status == Daily.Status.Started }
     }
 
 
