@@ -49,8 +49,8 @@ object DbMockViewModel {
     private fun fetchDailies(user: User, teamsId: List<String>) {
         FirebaseDB.setOnDailiesListener(teamsId) {
             dailies.value = it
-            if (selectedDaily.value?.id != null) {
-                val newSelectedDaily = dailies.value?.find { it.id == selectedDaily.value?.id }
+            if (selectedTeam.value != null && selectedDaily.value?.id == null) {
+                val newSelectedDaily = dailies.value?.find { it.status == Daily.Status.Started }
                 selectedDaily.postValue(newSelectedDaily)
             }
         }

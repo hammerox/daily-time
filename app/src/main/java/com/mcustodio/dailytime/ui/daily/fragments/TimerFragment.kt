@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import com.mcustodio.dailytime.FirebaseDB
 
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.data.Daily
@@ -55,12 +57,20 @@ class TimerFragment : Fragment() {
             }
         }
 
+        view.button_dailytimer_startdaily.setOnClickListener {
+            val newDaily = Daily.create(DbMockViewModel.selectedTeam.value)
+            FirebaseDB.dailies.ref.push().setValue(newDaily)
+                .addOnSuccessListener {}
+                .addOnFailureListener { Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show() }
+        }
+
         DbMockViewModel.selectedMember.observe(this, Observer {
             view.text_dailytimer_member.text = it?.nickname ?: ""
         })
 
         DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
-            view.text_dailytimer_notstarted.visibility = if (daily?.status == Daily.Status.NotStarted) View.VISIBLE else View.GONE
+            view.text_dailytimer_notstarted.visibility = if (DbMockViewModel.isAdmin.value != true && daily?.status == Daily.Status.NotStarted) View.VISIBLE else View.GONE
+            view.frame_dailytimer_startdaily.visibility = if (DbMockViewModel.isAdmin.value == true && (daily == null || daily.status == Daily.Status.NotStarted)) View.VISIBLE else View.GONE
             view.linear_dailytimer.visibility = if (daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
             view.text_dailytimer_finished.visibility = if (daily?.status == Daily.Status.Finished) View.VISIBLE else View.GONE
         })
