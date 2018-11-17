@@ -1,6 +1,7 @@
 package com.mcustodio.dailytime.ui
 
 import android.arch.lifecycle.MutableLiveData
+import com.google.firebase.database.FirebaseDatabase
 import com.mcustodio.dailytime.FirebaseDB
 import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.data.Member
@@ -22,6 +23,7 @@ object DbMockViewModel {
 
     val members = MutableLiveData<List<Member>>()
     val selectedMember = MutableLiveData<Member>()
+    val isAdmin = MutableLiveData<Boolean>()
 
 
     // REPOSITORY
@@ -63,6 +65,7 @@ object DbMockViewModel {
         val currentMember = DbMockViewModel.findMember(selectedTeam)
         this.selectedTeam.value = selectedTeam
         this.selectedMember.value = currentMember
+        this.isAdmin.value = currentMember?.admin ?: false
     }
 
 
@@ -77,6 +80,19 @@ object DbMockViewModel {
     fun getElapsedTime() : Long {
         val memberId = this.selectedMember.value?.id
         return this.selectedDaily.value?.members_time?.get(memberId) ?: 0
+    }
+
+    fun saveTime(time: Long) {
+        val dailyId = selectedDaily.value?.id
+        val memberId = selectedMember.value?.id
+        val reference = FirebaseDatabase.getInstance().getReference("dailies/$dailyId/members_time/")
+        reference.updateChildren(hashMapOf(memberId to time as Any))
+    }
+
+    fun isSpeaking(isSpeaking: Boolean) {
+        val memberId = selectedMember.value?.id
+        val reference = FirebaseDatabase.getInstance().getReference("members/$memberId/")
+        reference.updateChildren(hashMapOf("speaking" to isSpeaking as Any))
     }
 
 }

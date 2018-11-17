@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.ui.DbMockViewModel
@@ -35,12 +36,19 @@ class TeamFragment : Fragment() {
                 ?: listOf()
         })
 
+        DbMockViewModel.selectedMember.observe(this, Observer {
+            adapter.selectedMember = it
+        })
+
         DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
             adapter.timeList = daily?.members_time ?: hashMapOf()
         })
 
         adapter.onItemClick = {
-            DbMockViewModel.selectedMember.value = it
+            if (DbMockViewModel.isAdmin.value == true) {
+                DbMockViewModel.selectedMember.value = it
+                Toast.makeText(activity, "Empersonado ${it.nickname}", Toast.LENGTH_LONG).show()
+            }
         }
 
         return view

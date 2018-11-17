@@ -1,6 +1,7 @@
 package com.mcustodio.dailytime.ui.timer.fragments
 
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
@@ -37,7 +38,6 @@ class DailyFragment : Fragment() {
         totalElapsedTime = DbMockViewModel.getElapsedTime()
         view.text_timerdaily_timer.setTime()
         view.text_timerdaily_milli.setMilliseconds()
-        view.text_timerdaily_member.text = DbMockViewModel.selectedMember.value?.nickname
 
         view.linear_timerdaily.setOnClickListener {
             isRunning = !isRunning
@@ -46,26 +46,22 @@ class DailyFragment : Fragment() {
                 view.text_timerdaily_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.red_500))
                 startTime = SystemClock.uptimeMillis()
                 handler.postDelayed(runnable, 0)
+                DbMockViewModel.isSpeaking(true)
 
             } else {
                 view.text_timerdaily_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.black))
                 handler.removeCallbacks(runnable)
-                saveTime(totalElapsedTime)
+                DbMockViewModel.saveTime(totalElapsedTime)
+                DbMockViewModel.isSpeaking(false)
             }
         }
 
+        DbMockViewModel.selectedMember.observe(this, Observer {
+            view.text_timerdaily_member.text = it?.nickname ?: ""
+        })
+
         return view
     }
-
-    private fun saveTime(time: Long) {
-        val dailyId = DbMockViewModel.selectedDaily.value?.id
-        val memberId = DbMockViewModel.selectedMember.value?.id
-        val reference = FirebaseDatabase.getInstance().getReference("dailies/$dailyId/members_time/")
-        reference.updateChildren(hashMapOf(memberId to time as Any))
-            .addOnSuccessListener { }
-            .addOnFailureListener { Toast.makeText(activity!!, it.message, Toast.LENGTH_LONG).show() }
-    }
-
 
     private fun TextView.setTime() {
         val totalSeconds = (totalElapsedTime / 1000).toInt()

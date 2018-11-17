@@ -20,6 +20,12 @@ class TeamRecyclerAdapter(var onItemClick: ((Member) -> Unit)? = null) : Recycle
             notifyDataSetChanged()
         }
 
+    var selectedMember: Member? = null
+        set (value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
 
 
     override fun getItemCount(): Int = memberList.size
@@ -32,7 +38,8 @@ class TeamRecyclerAdapter(var onItemClick: ((Member) -> Unit)? = null) : Recycle
     override fun onBindViewHolder(holder: TeamViewHolder, position: Int) {
         val member = memberList[position]
         val time = timeList[member.id]
-        holder.setValues(member, time)
+        val isSelectedMember = member.id == selectedMember?.id
+        holder.setValues(member, time, isSelectedMember)
         holder.view.setOnClickListener {
             onItemClick?.invoke(member)
         }
