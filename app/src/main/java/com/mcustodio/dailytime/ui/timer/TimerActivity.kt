@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.support.v4.content.ContextCompat
-import android.view.View
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import com.mcustodio.dailytime.Preferences
@@ -33,7 +32,7 @@ class TimerActivity : AppCompatActivity() {
             // todo - Adicionar botão comunitário para encerrar daily
         })
 
-        timeWhenStopped = DbMockViewModel.getElappsedTime()
+        timeWhenStopped = DbMockViewModel.getElapsedTime()
         chronometer_timer.base = SystemClock.elapsedRealtime() - timeWhenStopped
 
         button_timer_startorpause.setOnClickListener {

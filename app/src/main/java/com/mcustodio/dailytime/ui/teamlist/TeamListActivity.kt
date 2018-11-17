@@ -46,11 +46,11 @@ class TeamListActivity : AppCompatActivity() {
     }
 
     private fun autoSelectIfPossible(teamList: List<Team>?, memberList: List<Member>?) {
-        // Abre único time caso só tenha um
-        if (tryToAutoOpen && teamList?.size == 1 && memberList?.isNotEmpty() == true) {
-            tryToAutoOpen = false
-            selectTeam(teamList[0])
-        }
+//        // Abre único time caso só tenha um
+//        if (tryToAutoOpen && teamList?.size == 1 && memberList?.isNotEmpty() == true) {
+//            tryToAutoOpen = false
+//            selectTeam(teamList[0])
+//        }
     }
 
     private fun selectTeam(selectedTeam: Team) {

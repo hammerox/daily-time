@@ -74,7 +74,7 @@ object DbMockViewModel {
 
     // TimerViewModel
 
-    fun getElappsedTime() : Long {
+    fun getElapsedTime() : Long {
         val memberId = this.selectedMember.value?.id
         return this.selectedDaily.value?.members_time?.get(memberId) ?: 0
     }

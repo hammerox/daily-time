@@ -3,12 +3,36 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:layout_gravity="center"
              tools:context=".ui.timer.fragments.DailyFragment">
     
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Daily"/>
+    <LinearLayout
+            android:id="@+id/linear_timerdaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+    
+        <TextView
+                android:id="@+id/text_timerdaily_timer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="70dp"
+                android:text="0:00"
+                android:gravity="center"/>
+    
+        <TextView
+                android:id="@+id/text_timerdaily_milli"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="000"
+                android:gravity="center"/>
+        
+    </LinearLayout>
+    
 
 </FrameLayout>

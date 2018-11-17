@@ -21,8 +21,8 @@ class NewTimerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_newtimer)
-        setupViewPager()
         bottomnav_newtimer.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        setupViewPager()
     }
 
     private fun setupViewPager() {
@@ -31,6 +31,7 @@ class NewTimerActivity : AppCompatActivity() {
         pagerAdapter.fragmentList.add(teamFragment)
         viewpager_newtimer.adapter = pagerAdapter
         viewpager_newtimer.addOnPageChangeListener(onViewPagerTabSelectedListener)
+        viewpager_newtimer.currentItem = 1
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
