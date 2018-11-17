@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.mcustodio.dailytime.FirebaseDB
 
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.data.Daily
@@ -36,46 +35,76 @@ class TimerFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_daily_timer, container, false)
 
-        totalElapsedTime = DbMockViewModel.getElapsedTime()
-        view.text_dailytimer_timer.setTime()
-        view.text_dailytimer_milli.setMilliseconds()
+        setupClock(view)
+        setupClickListeners(view)
+        setupViewModel(view)
 
-        view.linear_dailytimer.setOnClickListener {
+        return view
+    }
+
+    private fun setupViewModel(view: View) {
+        DbMockViewModel.selectedMember.observe(this, Observer {
+            view.text_dailytimer_member.text = it?.nickname ?: ""
+        })
+
+        DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
+            // Layout visibility
+            view.text_dailytimer_notstarted.visibility = if (DbMockViewModel.isAdmin.value != true && daily?.status == Daily.Status.NotStarted) View.VISIBLE else View.GONE
+            view.frame_dailytimer_startdaily.visibility = if (DbMockViewModel.isAdmin.value == true && (daily == null || daily.status == Daily.Status.NotStarted)) View.VISIBLE else View.GONE
+            view.frame_dailytimer_closedaily.visibility = if (DbMockViewModel.isAdmin.value == true && daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
+            view.linear_dailytimer_clock.visibility = if (daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
+            view.text_dailytimer_finished.visibility = if (daily?.status == Daily.Status.Finished) View.VISIBLE else View.GONE
+        })
+    }
+
+    private fun setupClickListeners(view: View) {
+        view.linear_dailytimer_clock.setOnClickListener {
             isRunning = !isRunning
 
             if (isRunning) {
                 view.text_dailytimer_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.red_500))
                 startTime = SystemClock.uptimeMillis()
-                handler.postDelayed(runnable, 0)
+                handler.postDelayed(onClockTick, 0)
                 DbMockViewModel.isSpeaking(true)
 
             } else {
                 view.text_dailytimer_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.black))
-                handler.removeCallbacks(runnable)
+                handler.removeCallbacks(onClockTick)
                 DbMockViewModel.saveTime(totalElapsedTime)
                 DbMockViewModel.isSpeaking(false)
             }
         }
 
         view.button_dailytimer_startdaily.setOnClickListener {
-            val newDaily = Daily.create(DbMockViewModel.selectedTeam.value)
-            FirebaseDB.dailies.ref.push().setValue(newDaily)
+            DbMockViewModel.createDaily()
                 .addOnSuccessListener {}
                 .addOnFailureListener { Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show() }
         }
 
-        DbMockViewModel.selectedMember.observe(this, Observer {
-            view.text_dailytimer_member.text = it?.nickname ?: ""
-        })
+        view.button_dailytimer_closedaily.setOnClickListener {
+            DbMockViewModel.closeDaily()
+                .addOnSuccessListener {}
+                .addOnFailureListener { Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show() }
+        }
+    }
 
-        DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
-            view.text_dailytimer_notstarted.visibility = if (DbMockViewModel.isAdmin.value != true && daily?.status == Daily.Status.NotStarted) View.VISIBLE else View.GONE
-            view.frame_dailytimer_startdaily.visibility = if (DbMockViewModel.isAdmin.value == true && (daily == null || daily.status == Daily.Status.NotStarted)) View.VISIBLE else View.GONE
-            view.linear_dailytimer.visibility = if (daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
-            view.text_dailytimer_finished.visibility = if (daily?.status == Daily.Status.Finished) View.VISIBLE else View.GONE
-        })
+    private fun setupClock(view: View) {
+        totalElapsedTime = DbMockViewModel.getElapsedTime()
+        view.text_dailytimer_timer.setTime()
+        view.text_dailytimer_milli.setMilliseconds()
+    }
 
-        return view
+
+     private var onClockTick = object : Runnable {
+        override fun run() {
+            deltaTime = SystemClock.uptimeMillis() - startTime
+            totalElapsedTime += deltaTime
+            startTime = SystemClock.uptimeMillis()
+            view?.text_dailytimer_timer?.setTime()
+            view?.text_dailytimer_milli?.setMilliseconds()
+
+            handler.postDelayed(this, 0)
+        }
     }
 
     private fun TextView.setTime() {
@@ -90,19 +119,6 @@ class TimerFragment : Fragment() {
         val milliSeconds = (totalElapsedTime % 1000).toInt()
 
         this.text = (String.format("%03d", milliSeconds))
-    }
-
-
-     private var runnable = object : Runnable {
-        override fun run() {
-            deltaTime = SystemClock.uptimeMillis() - startTime
-            totalElapsedTime += deltaTime
-            startTime = SystemClock.uptimeMillis()
-            view?.text_dailytimer_timer?.setTime()
-            view?.text_dailytimer_milli?.setMilliseconds()
-
-            handler.postDelayed(this, 0)
-        }
     }
 
 

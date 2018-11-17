@@ -1,12 +1,14 @@
 package com.mcustodio.dailytime.ui
 
 import android.arch.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.FirebaseDatabase
 import com.mcustodio.dailytime.FirebaseDB
 import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.data.Member
 import com.mcustodio.dailytime.data.Team
 import com.mcustodio.dailytime.data.User
+import java.util.*
 
 object DbMockViewModel {
 
@@ -47,9 +49,15 @@ object DbMockViewModel {
     }
 
     private fun fetchDailies(user: User, teamsId: List<String>) {
-        FirebaseDB.setOnDailiesListener(teamsId) {
-            dailies.value = it
-            if (selectedTeam.value != null && selectedDaily.value?.id == null) {
+        FirebaseDB.setOnDailiesListener(teamsId) { fetchedDailies ->
+            dailies.value = fetchedDailies
+
+            // Atualiza daily selecionada
+            if (selectedDaily.value?.id != null) {
+                selectedDaily.value = fetchedDailies.find { it.id == selectedDaily.value?.id }
+
+            // Seleciona daily recém-aberta
+            } else if (selectedTeam.value != null && selectedDaily.value?.id == null) {
                 val newSelectedDaily = dailies.value?.find { it.status == Daily.Status.Started }
                 selectedDaily.postValue(newSelectedDaily)
             }
@@ -81,17 +89,29 @@ object DbMockViewModel {
         return this.selectedDaily.value?.members_time?.get(memberId) ?: 0
     }
 
-    fun saveTime(time: Long) {
+    fun saveTime(time: Long): Task<Void> {
         val dailyId = selectedDaily.value?.id
         val memberId = selectedMember.value?.id
-        val reference = FirebaseDatabase.getInstance().getReference("dailies/$dailyId/members_time/")
-        reference.updateChildren(hashMapOf(memberId to time as Any))
+        val reference = FirebaseDB.instance.getReference("dailies/$dailyId/members_time/")
+        return reference.updateChildren(hashMapOf(memberId to time as Any))
     }
 
-    fun isSpeaking(isSpeaking: Boolean) {
+    fun isSpeaking(isSpeaking: Boolean): Task<Void> {
         val memberId = selectedMember.value?.id
-        val reference = FirebaseDatabase.getInstance().getReference("members/$memberId/")
-        reference.updateChildren(hashMapOf("speaking" to isSpeaking as Any))
+        val reference = FirebaseDB.instance.getReference("members/$memberId/")
+        return reference.updateChildren(hashMapOf("speaking" to isSpeaking as Any))
+    }
+
+    fun createDaily(): Task<Void> {
+        val newDaily = Daily.create(selectedTeam.value)
+        return FirebaseDB.dailies.ref.push().setValue(newDaily)
+    }
+
+    fun closeDaily(): Task<Void> {
+        val dailyId = selectedDaily.value?.id
+        val currentTime = Calendar.getInstance().time
+        val reference = FirebaseDB.instance.getReference("dailies/$dailyId/")
+        return reference.updateChildren(hashMapOf("time_end" to currentTime as Any))
     }
 
 }

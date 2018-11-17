@@ -8,7 +8,8 @@ import com.mcustodio.dailytime.data.User
 
 object FirebaseDB {
 
-    val root = FirebaseDatabase.getInstance().reference
+    val instance = FirebaseDatabase.getInstance()
+    val root = instance.reference
 
     val usersKey = "users"
     val users = root.child(usersKey)

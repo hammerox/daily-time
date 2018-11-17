@@ -14,7 +14,7 @@
             android:gravity="center"
             android:textSize="30dp"
             android:visibility="gone"
-            android:text="Daily finalizada!"/>
+            android:text="Daily encerrada!"/>
     
     <TextView
             android:id="@+id/text_dailytimer_notstarted"
@@ -34,32 +34,36 @@
     
         <com.rilixtech.materialfancybutton.MaterialFancyButton
                 android:id="@+id/button_dailytimer_startdaily"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                app:mfb_borderColor="#FFFFFF"
-                app:mfb_borderWidth="1dp"
-                app:mfb_defaultColor="@color/colorPrimary"
-                app:mfb_focusColor="@color/colorPrimaryDark"
-                app:mfb_text=""
-                app:mfb_radius="30dp"/>
+                style="@style/RoundedButton"
+                android:layout_gravity="center"/>
     
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="#FFF"
-                android:textStyle="bold"
+                style="@style/RoundedButtonText"
                 android:text="INICIAR DAILY"/>
         
     </FrameLayout>
     
+    <FrameLayout
+            android:id="@+id/frame_dailytimer_closedaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp">
+        
+        <com.rilixtech.materialfancybutton.MaterialFancyButton
+                android:id="@+id/button_dailytimer_closedaily"
+                style="@style/RoundedButton"
+                app:mfb_defaultColor="@color/red_500"
+                app:mfb_focusColor="@color/red_700"/>
+        
+        <TextView
+                style="@style/RoundedButtonText"
+                android:text="ENCERRAR DAILY"/>
     
-    
+    </FrameLayout>
     
     <LinearLayout
-            android:id="@+id/linear_dailytimer"
+            android:id="@+id/linear_dailytimer_clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
