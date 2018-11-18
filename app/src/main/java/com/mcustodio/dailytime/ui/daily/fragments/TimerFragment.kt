@@ -45,6 +45,7 @@ class TimerFragment : Fragment() {
     private fun setupViewModel(view: View) {
         DbMockViewModel.selectedMember.observe(this, Observer {
             view.text_dailytimer_member.text = it?.nickname ?: ""
+            setupClock(view)
         })
 
         DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
@@ -89,6 +90,7 @@ class TimerFragment : Fragment() {
     }
 
     private fun setupClock(view: View) {
+        handler.removeCallbacks(onClockTick)
         totalElapsedTime = DbMockViewModel.getElapsedTime()
         view.text_dailytimer_timer.setTime()
         view.text_dailytimer_milli.setMilliseconds()
