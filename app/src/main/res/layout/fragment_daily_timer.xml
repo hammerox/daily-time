@@ -6,99 +6,16 @@
              android:layout_gravity="center"
              tools:context=".ui.daily.fragments.TimerFragment">
     
-    <TextView
-            android:id="@+id/text_dailytimer_finished"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="30dp"
-            android:visibility="gone"
-            android:text="Daily encerrada!"/>
+    <include
+            android:id="@+id/component_dailytimer_notstarted"
+            layout="@layout/component_dailytimer_notstarted"/>
     
-    <TextView
-            android:id="@+id/text_dailytimer_notstarted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="30dp"
-            android:visibility="gone"
-            android:text="Daily ainda\nnão começou"/>
+    <include
+            android:id="@+id/component_dailytimer_started"
+            layout="@layout/component_dailytimer_started"/>
     
-    <FrameLayout
-            android:id="@+id/frame_dailytimer_startdaily"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
+    <include
+            android:id="@+id/component_dailytimer_finished"
+            layout="@layout/component_dailytimer_finished"/>
     
-        <com.rilixtech.materialfancybutton.MaterialFancyButton
-                android:id="@+id/button_dailytimer_startdaily"
-                style="@style/RoundedButton"
-                android:layout_gravity="center"/>
-    
-        <TextView
-                style="@style/RoundedButtonText"
-                android:text="INICIAR DAILY"/>
-        
-    </FrameLayout>
-    
-    <FrameLayout
-            android:id="@+id/frame_dailytimer_closedaily"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp">
-        
-        <com.rilixtech.materialfancybutton.MaterialFancyButton
-                android:id="@+id/button_dailytimer_closedaily"
-                style="@style/RoundedButton"
-                app:mfb_defaultColor="@color/gray_400"
-                app:mfb_focusColor="@color/gray_700"/>
-        
-        <TextView
-                style="@style/RoundedButtonText"
-                android:text="ENCERRAR DAILY"/>
-    
-    </FrameLayout>
-    
-    <LinearLayout
-            android:id="@+id/linear_dailytimer_clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_gravity="center">
-    
-        <TextView
-                android:id="@+id/text_dailytimer_member"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:text="Joao"
-                android:gravity="center"/>
-    
-        <TextView
-                android:id="@+id/text_dailytimer_timer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:textSize="70dp"
-                android:text="0:00"
-                android:gravity="center"/>
-    
-        <TextView
-                android:id="@+id/text_dailytimer_milli"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:text="000"
-                android:gravity="center"/>
-        
-    </LinearLayout>
-    
-
 </FrameLayout>

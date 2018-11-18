@@ -16,6 +16,8 @@ import android.widget.Toast
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.ui.DbMockViewModel
+import kotlinx.android.synthetic.main.component_dailytimer_notstarted.view.*
+import kotlinx.android.synthetic.main.component_dailytimer_started.view.*
 import kotlinx.android.synthetic.main.fragment_daily_timer.view.*
 
 
@@ -49,12 +51,14 @@ class TimerFragment : Fragment() {
         })
 
         DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
+            view.component_dailytimer_notstarted.visibility = if (daily?.let { it.status == Daily.Status.NotStarted } ?: true) View.VISIBLE else View.GONE
+            view.component_dailytimer_started.visibility = if (daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
+            view.component_dailytimer_finished.visibility = if (daily?.status == Daily.Status.Finished) View.VISIBLE else View.GONE
+
             // Layout visibility
-            view.text_dailytimer_notstarted.visibility = if (DbMockViewModel.isAdmin.value != true && daily?.status == Daily.Status.NotStarted) View.VISIBLE else View.GONE
-            view.frame_dailytimer_startdaily.visibility = if (DbMockViewModel.isAdmin.value == true && (daily == null || daily.status == Daily.Status.NotStarted)) View.VISIBLE else View.GONE
-            view.frame_dailytimer_closedaily.visibility = if (DbMockViewModel.isAdmin.value == true && daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
-            view.linear_dailytimer_clock.visibility = if (daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
-            view.text_dailytimer_finished.visibility = if (daily?.status == Daily.Status.Finished) View.VISIBLE else View.GONE
+            view.text_dailytimer_notstarted.visibility = if (DbMockViewModel.isAdmin.value != true) View.VISIBLE else View.GONE
+            view.buttonframe_dailytimer_startdaily.visibility = if (DbMockViewModel.isAdmin.value == true) View.VISIBLE else View.GONE
+            view.buttonframe_dailytimer_closedaily.visibility = if (DbMockViewModel.isAdmin.value == true && daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
         })
     }
 
