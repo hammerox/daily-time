@@ -23,8 +23,8 @@ import kotlinx.android.synthetic.main.fragment_daily_timer.view.*
 
 class TimerFragment : Fragment() {
 
-    private var isRunning = false
     private val handler = Handler()
+    private var isRunning = false
     private var totalElapsedTime:Long = 0
     private var startTime:Long = 0
     private var deltaTime: Long = 0
@@ -35,69 +35,71 @@ class TimerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_daily_timer, container, false)
-
-        setupClock(view)
-        setupClickListeners(view)
-        setupViewModel(view)
-
-        return view
+        return inflater.inflate(R.layout.fragment_daily_timer, container, false)
     }
 
-    private fun setupViewModel(view: View) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupClock()
+        setupClickListeners()
+        setupViewModel()
+    }
+
+    private fun setupViewModel() {
         DbMockViewModel.selectedMember.observe(this, Observer {
-            view.text_dailytimer_member.text = it?.nickname ?: ""
-            setupClock(view)
+            view?.text_dailytimer_member?.text = it?.nickname ?: ""
+            setupClock()
         })
 
         DbMockViewModel.selectedDaily.observe(this, Observer { daily ->
-            view.component_dailytimer_notstarted.visibility = if (daily?.let { it.status == Daily.Status.NotStarted } ?: true) View.VISIBLE else View.GONE
-            view.component_dailytimer_started.visibility = if (daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
-            view.component_dailytimer_finished.visibility = if (daily?.status == Daily.Status.Finished) View.VISIBLE else View.GONE
+            view?.component_dailytimer_notstarted?.visibility = if (daily?.let { it.status == Daily.Status.NotStarted } ?: true) View.VISIBLE else View.GONE
+            view?.component_dailytimer_started?.visibility = if (daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
+            view?.component_dailytimer_finished?.visibility = if (daily?.status == Daily.Status.Finished) View.VISIBLE else View.GONE
 
             // Layout visibility
-            view.text_dailytimer_notstarted.visibility = if (DbMockViewModel.isAdmin.value != true) View.VISIBLE else View.GONE
-            view.buttonframe_dailytimer_startdaily.visibility = if (DbMockViewModel.isAdmin.value == true) View.VISIBLE else View.GONE
-            view.buttonframe_dailytimer_closedaily.visibility = if (DbMockViewModel.isAdmin.value == true && daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
+            view?.text_dailytimer_notstarted?.visibility = if (DbMockViewModel.isAdmin.value != true) View.VISIBLE else View.GONE
+            view?.buttonframe_dailytimer_startdaily?.visibility = if (DbMockViewModel.isAdmin.value == true) View.VISIBLE else View.GONE
+            view?.buttonframe_dailytimer_closedaily?.visibility = if (DbMockViewModel.isAdmin.value == true && daily?.status == Daily.Status.Started) View.VISIBLE else View.GONE
         })
     }
 
-    private fun setupClickListeners(view: View) {
-        view.linear_dailytimer_clock.setOnClickListener {
+    private fun setupClickListeners() {
+        view?.linear_dailytimer_clock?.setOnClickListener {
             isRunning = !isRunning
 
             if (isRunning) {
-                view.text_dailytimer_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.red_500))
+                view?.text_dailytimer_timer?.setTextColor(ContextCompat.getColor(activity!!, R.color.red_500))
                 startTime = SystemClock.uptimeMillis()
                 handler.postDelayed(onClockTick, 0)
                 DbMockViewModel.isSpeaking(true)
 
             } else {
-                view.text_dailytimer_timer.setTextColor(ContextCompat.getColor(activity!!, R.color.black))
+                view?.text_dailytimer_timer?.setTextColor(ContextCompat.getColor(activity!!, R.color.black))
                 handler.removeCallbacks(onClockTick)
                 DbMockViewModel.saveMemberTime(totalElapsedTime)
                 DbMockViewModel.isSpeaking(false)
             }
         }
 
-        view.button_dailytimer_startdaily.setOnClickListener {
+        view?.button_dailytimer_startdaily?.setOnClickListener {
             DbMockViewModel.createDaily()
                 .addOnSuccessListener {}
                 .addOnFailureListener { Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show() }
         }
 
-        view.button_dailytimer_closedaily.setOnClickListener {
+        view?.button_dailytimer_closedaily?.setOnClickListener {
             DbMockViewModel.closeDaily()
                 .addOnSuccessListener {}
                 .addOnFailureListener { Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show() }
         }
     }
 
-    private fun setupClock(view: View) {
+    private fun setupClock() {
         handler.removeCallbacks(onClockTick)
         totalElapsedTime = DbMockViewModel.getElapsedTime()
-        view.text_dailytimer_timer.setTime()
-        view.text_dailytimer_milli.setMilliseconds()
+        view?.text_dailytimer_timer?.setTime()
+        view?.text_dailytimer_milli?.setMilliseconds()
     }
 
 
