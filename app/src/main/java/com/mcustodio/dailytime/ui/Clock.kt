@@ -17,9 +17,9 @@ class Clock {
     private var deltaTime: Long = 0
 
 
-    fun setup(initialTime: Long) {
+    fun setup(initialTime: Long?) {
         stop()
-        elapsedTime = initialTime
+        elapsedTime = initialTime ?: 0
     }
 
     fun start() {
