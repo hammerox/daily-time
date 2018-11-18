@@ -53,8 +53,8 @@
         <com.rilixtech.materialfancybutton.MaterialFancyButton
                 android:id="@+id/button_dailytimer_closedaily"
                 style="@style/RoundedButton"
-                app:mfb_defaultColor="@color/red_500"
-                app:mfb_focusColor="@color/red_700"/>
+                app:mfb_defaultColor="@color/gray_400"
+                app:mfb_focusColor="@color/gray_700"/>
         
         <TextView
                 style="@style/RoundedButtonText"

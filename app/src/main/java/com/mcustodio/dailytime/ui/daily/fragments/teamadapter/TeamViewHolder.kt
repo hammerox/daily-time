@@ -1,22 +1,17 @@
 package com.mcustodio.dailytime.ui.daily.fragments.teamadapter
 
-import android.graphics.Typeface
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.data.Member
+import com.mcustodio.dailytime.ui.BaseRecyclerViewHolder
 import kotlinx.android.synthetic.main.item_timerteam_member.view.*
 import java.text.SimpleDateFormat
 
-class TeamViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class TeamViewHolder(val view: View) : BaseRecyclerViewHolder(view) {
 
     private val textName = view.text_dailyteam_name
     private val textTimer = view.text_dailyteam_timer
     private val speakingImage = view.image_dailyitem_speaking
 
-    private val highlightColor = ContextCompat.getColor(view.context, R.color.colorPrimary)
-    private val normalColor = ContextCompat.getColor(view.context, android.R.color.tab_indicator_text)
 
     fun setValues(member: Member, time: Long?, isSelectedMember: Boolean) {
         textName.text = member.nickname
@@ -28,13 +23,15 @@ class TeamViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         // Colors
 
-        textName.setTextColor(if (isSelectedMember) highlightColor else normalColor)
-        textTimer.setTextColor(if (isSelectedMember) highlightColor else normalColor)
+        val color = if (isSelectedMember) highlightColor else normalColor
+        textName.setTextColor(color)
+        textTimer.setTextColor(color)
 
         // TextStyle
 
-        textName.setTypeface(textName.typeface, if (isSelectedMember) Typeface.BOLD else Typeface.NORMAL)
-        textTimer.setTypeface(textName.typeface, if (isSelectedMember) Typeface.BOLD else Typeface.NORMAL)
+        val style = if (isSelectedMember) montserratBold else montserratRegular
+        textName.typeface = style
+        textTimer.typeface = style
 
         // Visibilities
 
