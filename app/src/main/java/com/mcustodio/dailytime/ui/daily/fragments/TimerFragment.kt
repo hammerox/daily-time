@@ -3,8 +3,6 @@ package com.mcustodio.dailytime.ui.daily.fragments
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.os.Handler
-import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
@@ -15,6 +13,7 @@ import android.widget.Toast
 
 import com.mcustodio.dailytime.R
 import com.mcustodio.dailytime.data.Daily
+import com.mcustodio.dailytime.ui.Clock
 import com.mcustodio.dailytime.ui.DbMockViewModel
 import kotlinx.android.synthetic.main.component_dailytimer_notstarted.view.*
 import kotlinx.android.synthetic.main.component_dailytimer_started.view.*
@@ -23,11 +22,7 @@ import kotlinx.android.synthetic.main.fragment_daily_timer.view.*
 
 class TimerFragment : Fragment() {
 
-    private val handler = Handler()
-    private var isRunning = false
-    private var totalElapsedTime:Long = 0
-    private var startTime:Long = 0
-    private var deltaTime: Long = 0
+    private val clock = Clock()
 
 
     override fun onCreateView(
@@ -66,18 +61,15 @@ class TimerFragment : Fragment() {
 
     private fun setupClickListeners() {
         view?.linear_dailytimer_clock?.setOnClickListener {
-            isRunning = !isRunning
-
-            if (isRunning) {
+            if (!clock.isRunning) {
                 view?.text_dailytimer_timer?.setTextColor(ContextCompat.getColor(activity!!, R.color.red_500))
-                startTime = SystemClock.uptimeMillis()
-                handler.postDelayed(onClockTick, 0)
+                clock.start()
                 DbMockViewModel.isSpeaking(true)
 
             } else {
                 view?.text_dailytimer_timer?.setTextColor(ContextCompat.getColor(activity!!, R.color.black))
-                handler.removeCallbacks(onClockTick)
-                DbMockViewModel.saveMemberTime(totalElapsedTime)
+                clock.stop()
+                DbMockViewModel.saveMemberTime(clock.elapsedTime)
                 DbMockViewModel.isSpeaking(false)
             }
         }
@@ -96,35 +88,27 @@ class TimerFragment : Fragment() {
     }
 
     private fun setupClock() {
-        handler.removeCallbacks(onClockTick)
-        totalElapsedTime = DbMockViewModel.getElapsedTime()
-        view?.text_dailytimer_timer?.setTime()
-        view?.text_dailytimer_milli?.setMilliseconds()
-    }
-
-
-     private var onClockTick = object : Runnable {
-        override fun run() {
-            deltaTime = SystemClock.uptimeMillis() - startTime
-            totalElapsedTime += deltaTime
-            startTime = SystemClock.uptimeMillis()
-            view?.text_dailytimer_timer?.setTime()
-            view?.text_dailytimer_milli?.setMilliseconds()
-
-            handler.postDelayed(this, 0)
+        val initialTime = DbMockViewModel.getElapsedTime()
+        clock.setup(initialTime)
+        clock.onTick = { time ->
+            view?.text_dailytimer_timer?.setTime(time)
+            view?.text_dailytimer_milli?.setMilliseconds(time)
         }
+
+        view?.text_dailytimer_timer?.setTime(initialTime)
+        view?.text_dailytimer_milli?.setMilliseconds(initialTime)
     }
 
-    private fun TextView.setTime() {
-        val totalSeconds = (totalElapsedTime / 1000).toInt()
+    private fun TextView.setTime(time: Long) {
+        val totalSeconds = (time / 1000).toInt()
         val minutes = totalSeconds / 60
         val seconds = totalSeconds % 60
 
         this.text = ("" + minutes + ":" + String.format("%02d", seconds))
     }
 
-    private fun TextView.setMilliseconds() {
-        val milliSeconds = (totalElapsedTime % 1000).toInt()
+    private fun TextView.setMilliseconds(time: Long) {
+        val milliSeconds = (time % 1000).toInt()
 
         this.text = (String.format("%03d", milliSeconds))
     }
