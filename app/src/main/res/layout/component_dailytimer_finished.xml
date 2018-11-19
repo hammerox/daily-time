@@ -24,7 +24,7 @@
             android:text="Seu tempo"/>
     
     <TextView
-            android:id="@+id/text_dailytimer_yourtime"
+            android:id="@+id/text_dailytimer_membertime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -55,6 +55,7 @@
                 android:text="Anterior"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_memberlasttime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -62,6 +63,7 @@
                 android:text="3:20"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_memberlastdiff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -80,6 +82,7 @@
                 android:text="Últimas 5"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_memberweektime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -87,6 +90,7 @@
                 android:text="5:20"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_memberweekdiff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -105,6 +109,7 @@
                 android:text="Todas"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_memberalltime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -112,6 +117,7 @@
                 android:text="5:20"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_memberalldiff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -130,7 +136,7 @@
             android:text="Time"/>
     
     <TextView
-            android:id="@+id/text_dailytimer_dailytime"
+            android:id="@+id/text_dailytimer_teamtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -161,6 +167,7 @@
                 android:text="Anterior"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_teamlasttime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -168,6 +175,7 @@
                 android:text="3:20"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_teamlastdiff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -186,6 +194,7 @@
                 android:text="Últimas 5"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_teamweektime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -193,6 +202,7 @@
                 android:text="5:20"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_teamweekdiff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -211,6 +221,7 @@
                 android:text="Todas"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_teamalltime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -218,6 +229,7 @@
                 android:text="5:20"/>
         
         <TextView
+                android:id="@+id/text_dailytimer_teamalldiff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
