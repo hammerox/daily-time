@@ -16,6 +16,121 @@
             android:text="Daily encerrada!"/><Space android:layout_width="match_parent" android:layout_height="32dp"/>
     
     <TextView
+            android:id="@+id/text_dailytimer_membername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:text="Seu tempo"/>
+    
+    <TextView
+            android:id="@+id/text_dailytimer_membertime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="30dp"
+            android:text="0:00"
+            android:gravity="center"/>
+    
+    <Space android:layout_width="match_parent" android:layout_height="16dp"/>
+    
+    <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            grid:alignmentMode="alignBounds"
+            grid:columnCount="3"
+            grid:rowOrderPreserved="false"
+            grid:useDefaultMargins="true">
+        
+        <!--Última Daily-->
+        
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                android:textStyle="bold"
+                android:text="Anterior"/>
+        
+        <TextView
+                android:id="@+id/text_dailytimer_memberlastdiff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginEnd="16dp"
+                android:text="-0:10"/>
+        
+        <TextView
+                android:id="@+id/text_dailytimer_memberlasttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/red_500"
+                android:text="3:20"/>
+        
+        <!--Últimas 5 Dailies-->
+        
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                android:textStyle="bold"
+                android:text="Últimas 5"/>
+        
+        <TextView
+                android:id="@+id/text_dailytimer_memberweekdiff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginEnd="16dp"
+                android:text="+0:20"/>
+        
+        <TextView
+                android:id="@+id/text_dailytimer_memberweektime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="5:20"/>
+        
+        <!--Todas-->
+        
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                android:textStyle="bold"
+                android:text="Todas"/>
+        
+        <TextView
+                android:id="@+id/text_dailytimer_memberalldiff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginEnd="16dp"
+                android:text="+0:20"/>
+        
+        <TextView
+                android:id="@+id/text_dailytimer_memberalltime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="5:20"/>
+    
+    </android.support.v7.widget.GridLayout>
+    
+    <Space android:layout_width="match_parent" android:layout_height="32dp"/>
+    
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -59,9 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:layout_marginEnd="16dp"
-                android:textColor="@color/colorPrimary"
                 android:text="-0:10"/>
         
         <TextView
@@ -69,6 +182,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 android:text="3:20"/>
         
         <!--Últimas 5 Dailies-->
@@ -86,9 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:layout_marginEnd="16dp"
-                android:textColor="@color/red_500"
                 android:text="+0:20"/>
         
         <TextView
@@ -96,6 +209,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 android:text="5:20"/>
         
         <!--Todas-->
@@ -113,9 +228,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:layout_marginEnd="16dp"
-                android:textColor="@color/red_500"
                 android:text="+0:20"/>
         
         <TextView
@@ -123,121 +236,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="5:20"/>
-    
-    </android.support.v7.widget.GridLayout>
-    
-    <Space android:layout_width="match_parent" android:layout_height="32dp"/>
-    
-    <TextView
-            android:id="@+id/text_dailytimer_membername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:text="Seu tempo"/>
-    
-    <TextView
-            android:id="@+id/text_dailytimer_membertime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="#000"
-            android:textSize="30dp"
-            android:text="0:00"
-            android:gravity="center"/>
-    
-    <Space android:layout_width="match_parent" android:layout_height="16dp"/>
-    
-    <android.support.v7.widget.GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            grid:alignmentMode="alignBounds"
-            grid:columnCount="3"
-            grid:rowOrderPreserved="false"
-            grid:useDefaultMargins="true">
-        
-        <!--Última Daily-->
-        
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                grid:layout_columnWeight="1"
-                grid:layout_gravity="fill_horizontal"
                 android:textStyle="bold"
-                android:text="Anterior"/>
-    
-        <TextView
-                android:id="@+id/text_dailytimer_memberlastdiff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:layout_marginEnd="16dp"
                 android:textColor="@color/colorPrimary"
-                android:text="-0:10"/>
-        
-        <TextView
-                android:id="@+id/text_dailytimer_memberlasttime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="3:20"/>
-        
-        <!--Últimas 5 Dailies-->
-        
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                grid:layout_columnWeight="1"
-                grid:layout_gravity="fill_horizontal"
-                android:textStyle="bold"
-                android:text="Últimas 5"/>
-    
-        <TextView
-                android:id="@+id/text_dailytimer_memberweekdiff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/red_500"
-                android:text="+0:20"/>
-        
-        <TextView
-                android:id="@+id/text_dailytimer_memberweektime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="5:20"/>
-        
-        <!--Todas-->
-        
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                grid:layout_columnWeight="1"
-                grid:layout_gravity="fill_horizontal"
-                android:textStyle="bold"
-                android:text="Todas"/>
-    
-        <TextView
-                android:id="@+id/text_dailytimer_memberalldiff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/red_500"
-                android:text="+0:20"/>
-        
-        <TextView
-                android:id="@+id/text_dailytimer_memberalltime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
                 android:text="5:20"/>
     
     </android.support.v7.widget.GridLayout>

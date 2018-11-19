@@ -26,6 +26,9 @@ class TimerFragment : Fragment() {
 
     private val clock = Clock()
 
+    private val goodColor by lazy { ContextCompat.getColor(view?.context!!, R.color.colorPrimary) }
+    private val badColor by lazy { ContextCompat.getColor(view?.context!!, R.color.red_500) }
+    private val neutralColor by lazy { ContextCompat.getColor(view?.context!!, android.R.color.tab_indicator_text) }
 
 
     override fun onCreateView(
@@ -112,7 +115,7 @@ class TimerFragment : Fragment() {
 
 
     private fun TextView.setTime(time: Long?, signed: Boolean = false) {
-        this.text = if (time != null) {
+        this.text = if (time != null && time != 0L) {
             val totalSeconds = (time / 1000).toInt()
             val minutes = Math.abs(totalSeconds / 60)
             val seconds = Math.abs(totalSeconds % 60)
@@ -120,7 +123,7 @@ class TimerFragment : Fragment() {
             if (signed) (if (time > 0) "+$timeString" else "-$timeString")
             else timeString
         } else {
-            "N/A"
+            "-"
         }
 
     }
@@ -136,9 +139,6 @@ class TimerFragment : Fragment() {
     private fun calculateResult() {
         val result = DailyResult(DbMockViewModel.selectedDaily.value!!, DbMockViewModel.dailies.value!!, DbMockViewModel.selectedMember.value!!)
 
-        val goodColor = ContextCompat.getColor(view?.context!!, R.color.colorPrimary)
-        val badColor = ContextCompat.getColor(view?.context!!, R.color.red_500)
-
         view?.text_dailytimer_membertime?.setTime(result.member.currentTime)
         view?.text_dailytimer_memberalltime?.setTime(result.member.allTime)
         view?.text_dailytimer_memberweektime?.setTime(result.member.weekTime)
@@ -147,9 +147,12 @@ class TimerFragment : Fragment() {
         view?.text_dailytimer_memberweekdiff?.setTime(result.member.weekDiff, true)
         view?.text_dailytimer_memberlastdiff?.setTime(result.member.lastDiff, true)
 
-        view?.text_dailytimer_memberalldiff?.setTextColor(if (result.member.allDiff ?: 0 > 0) badColor else goodColor)
-        view?.text_dailytimer_memberweekdiff?.setTextColor(if (result.member.weekDiff ?: 0 > 0) badColor else goodColor)
-        view?.text_dailytimer_memberlastdiff?.setTextColor(if (result.member.lastDiff ?: 0 > 0) badColor else goodColor)
+        view?.text_dailytimer_memberalltime?.setTextColor(result.member.allDiff.color())
+        view?.text_dailytimer_memberweektime?.setTextColor(result.member.weekDiff.color())
+        view?.text_dailytimer_memberlasttime?.setTextColor(result.member.lastDiff.color())
+        view?.text_dailytimer_memberalldiff?.setTextColor(result.member.allDiff.color())
+        view?.text_dailytimer_memberweekdiff?.setTextColor(result.member.weekDiff.color())
+        view?.text_dailytimer_memberlastdiff?.setTextColor(result.member.lastDiff.color())
 
 
         view?.text_dailytimer_teamtime?.setTime(result.team.currentTime)
@@ -160,9 +163,22 @@ class TimerFragment : Fragment() {
         view?.text_dailytimer_teamweekdiff?.setTime(result.team.weekDiff, true)
         view?.text_dailytimer_teamlastdiff?.setTime(result.team.lastDiff, true)
 
-        view?.text_dailytimer_teamalldiff?.setTextColor(if (result.team.allDiff ?: 0 > 0) badColor else goodColor)
-        view?.text_dailytimer_teamweekdiff?.setTextColor(if (result.team.weekDiff ?: 0 > 0) badColor else goodColor)
-        view?.text_dailytimer_teamlastdiff?.setTextColor(if (result.team.lastDiff ?: 0 > 0) badColor else goodColor)
+        view?.text_dailytimer_teamalltime?.setTextColor(result.team.allDiff.color())
+        view?.text_dailytimer_teamweektime?.setTextColor(result.team.weekDiff.color())
+        view?.text_dailytimer_teamlasttime?.setTextColor(result.team.lastDiff.color())
+        view?.text_dailytimer_teamalldiff?.setTextColor(result.team.allDiff.color())
+        view?.text_dailytimer_teamweekdiff?.setTextColor(result.team.weekDiff.color())
+        view?.text_dailytimer_teamlastdiff?.setTextColor(result.team.lastDiff.color())
+    }
+
+
+    fun Long?.color() : Int {
+        return when  {
+            this == null -> neutralColor
+            this > 0 -> badColor
+            this < 0 -> goodColor
+            else -> neutralColor
+        }
     }
 
 
