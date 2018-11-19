@@ -49,6 +49,7 @@ class TimerFragment : Fragment() {
     private fun setupViewModel() {
         DbMockViewModel.selectedMember.observe(this, Observer {
             view?.text_dailytimer_member?.text = it?.nickname ?: ""
+            view?.text_dailytimer_membername?.text = it?.nickname ?: ""
             setupClock()
             if (DbMockViewModel.selectedDaily.value?.status == Daily.Status.Finished) calculateResult()
         })
@@ -135,8 +136,8 @@ class TimerFragment : Fragment() {
     private fun calculateResult() {
         val result = DailyResult(DbMockViewModel.selectedDaily.value!!, DbMockViewModel.dailies.value!!, DbMockViewModel.selectedMember.value!!)
 
-        val positiveColor = ContextCompat.getColor(view?.context!!, R.color.colorPrimary)
-        val negativeColor = ContextCompat.getColor(view?.context!!, R.color.red_500)
+        val goodColor = ContextCompat.getColor(view?.context!!, R.color.colorPrimary)
+        val badColor = ContextCompat.getColor(view?.context!!, R.color.red_500)
 
         view?.text_dailytimer_membertime?.setTime(result.member.currentTime)
         view?.text_dailytimer_memberalltime?.setTime(result.member.allTime)
@@ -146,17 +147,22 @@ class TimerFragment : Fragment() {
         view?.text_dailytimer_memberweekdiff?.setTime(result.member.weekDiff, true)
         view?.text_dailytimer_memberlastdiff?.setTime(result.member.lastDiff, true)
 
-        view?.text_dailytimer_memberalldiff?.setTextColor(if (result.member.allDiff ?: 0 > 0) negativeColor else positiveColor)
-        view?.text_dailytimer_memberweekdiff?.setTextColor(if (result.member.weekDiff ?: 0 > 0) negativeColor else positiveColor)
-        view?.text_dailytimer_memberlastdiff?.setTextColor(if (result.member.lastDiff ?: 0 > 0) negativeColor else positiveColor)
+        view?.text_dailytimer_memberalldiff?.setTextColor(if (result.member.allDiff ?: 0 > 0) badColor else goodColor)
+        view?.text_dailytimer_memberweekdiff?.setTextColor(if (result.member.weekDiff ?: 0 > 0) badColor else goodColor)
+        view?.text_dailytimer_memberlastdiff?.setTextColor(if (result.member.lastDiff ?: 0 > 0) badColor else goodColor)
 
-//        view?.text_dailytimer_teamtime?.text
-//        view?.text_dailytimer_teamalltime?.text
-//        view?.text_dailytimer_teamweektime?.text
-//        view?.text_dailytimer_teamlasttime?.text
-//        view?.text_dailytimer_teamalldiff?.text
-//        view?.text_dailytimer_teamweekdiff?.text
-//        view?.text_dailytimer_teamlastdiff?.text
+
+        view?.text_dailytimer_teamtime?.setTime(result.team.currentTime)
+        view?.text_dailytimer_teamalltime?.setTime(result.team.allTime)
+        view?.text_dailytimer_teamweektime?.setTime(result.team.weekTime)
+        view?.text_dailytimer_teamlasttime?.setTime(result.team.lastTime)
+        view?.text_dailytimer_teamalldiff?.setTime(result.team.allDiff, true)
+        view?.text_dailytimer_teamweekdiff?.setTime(result.team.weekDiff, true)
+        view?.text_dailytimer_teamlastdiff?.setTime(result.team.lastDiff, true)
+
+        view?.text_dailytimer_teamalldiff?.setTextColor(if (result.team.allDiff ?: 0 > 0) badColor else goodColor)
+        view?.text_dailytimer_teamweekdiff?.setTextColor(if (result.team.weekDiff ?: 0 > 0) badColor else goodColor)
+        view?.text_dailytimer_teamlastdiff?.setTextColor(if (result.team.lastDiff ?: 0 > 0) badColor else goodColor)
     }
 
 

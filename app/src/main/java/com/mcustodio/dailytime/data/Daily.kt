@@ -34,4 +34,13 @@ data class Daily(var team_id: String? = null,
             }
         }
     }
+
+
+    fun timeElapsed() : Long? {
+        return if (time_start != null && time_end != null) {
+            time_end!!.time - time_start!!.time
+        } else {
+            null
+        }
+    }
 }
