@@ -11,8 +11,8 @@ class DailyResult(currentDaily: Daily, dailies: List<Daily>, member: Member) {
     init {
         val allDailies = dailies
             .filter { it.status == Daily.Status.Finished }
-            .filter { it.time_start?.time ?: 0 < currentDaily.time_start?.time ?: 0 }    // Ignora o tempo atual
-            .sortedByDescending { it.time_start }  // Ordena do mais recente
+            .filter { it.started_at ?: 0 < currentDaily.started_at ?: 0 }    // Ignora o tempo atual
+            .sortedByDescending { it.started_at }  // Ordena do mais recente
 
         val memberDailies = allDailies.filter { it.members_time?.containsKey(member.id) ?: false }.takeIf { it.isNotEmpty() }
         val memberLastWeek = memberDailies?.filterIndexed { i, _ -> i < 5 }.takeIf { it?.isNotEmpty() == true }
@@ -37,10 +37,10 @@ class DailyResult(currentDaily: Daily, dailies: List<Daily>, member: Member) {
         val teamLastDaily = teamDailies?.firstOrNull()
 
         this.team = Result(
-            currentTime = currentDaily.timeElapsed(),
-            allTime = teamDailies?.mapNotNull { it.timeElapsed() }?.sum()?.div(teamDailies.size),
-            weekTime = teamLastWeek?.mapNotNull { it.timeElapsed() }?.sum()?.div(teamLastWeek.size),
-            lastTime = teamLastDaily?.timeElapsed()
+            currentTime = currentDaily.time,
+            allTime = teamDailies?.mapNotNull { it.time }?.sum()?.div(teamDailies.size),
+            weekTime = teamLastWeek?.mapNotNull { it.time }?.sum()?.div(teamLastWeek.size),
+            lastTime = teamLastDaily?.time
         )
     }
 

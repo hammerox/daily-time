@@ -5,8 +5,8 @@ import java.util.*
 import kotlin.collections.HashMap
 
 data class Daily(var team_id: String? = null,
-                 var time_start: Date? = null,
-                 var time_end: Date? = null,
+                 var started_at: Long? = null,
+                 var time: Long? = null,
                  var members_time: HashMap<String, Long?>? = null,
                  @set:Exclude @get:Exclude var id: String? = null) {
 
@@ -15,12 +15,11 @@ data class Daily(var team_id: String? = null,
     }
 
 
-    val status : Status
+    @get:Exclude val status : Status
         get() {
             return when {
-                this.time_start != null && this.time_end == null -> Status.Started
-                this.time_start != null && this.time_end != null -> Status.Finished
-                this.time_start == null && this.time_end == null -> Status.Finished
+                this.started_at != null && this.time == null -> Status.Started
+                this.started_at != null && this.time != null -> Status.Finished
                 else -> Status.NotStarted
             }
         }
@@ -30,15 +29,26 @@ data class Daily(var team_id: String? = null,
         fun create(team: Team?) : Daily {
             return Daily().apply {
                 this.team_id = team?.id
-                this.time_start = Calendar.getInstance().time
+                this.started_at = Calendar.getInstance().time.time
             }
         }
     }
 
 
-    fun timeElapsed() : Long? {
-        return if (time_start != null && time_end != null) {
-            time_end!!.time - time_start!!.time
+
+    fun startTime() : Date? {
+        return started_at?.let {
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = started_at!!
+            cal.time
+        }
+    }
+
+    fun endTime() : Date? {
+        return if (started_at != null && time != null) {
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = started_at!! + time!!
+            cal.time
         } else {
             null
         }

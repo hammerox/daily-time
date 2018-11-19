@@ -5,6 +5,7 @@ import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.ui.BaseRecyclerViewHolder
 import kotlinx.android.synthetic.main.item_dailylist_daily.view.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 class DailyListViewHolder(val view: View) : BaseRecyclerViewHolder(view) {
 
@@ -13,7 +14,7 @@ class DailyListViewHolder(val view: View) : BaseRecyclerViewHolder(view) {
 
 
     fun setValues(daily: Daily) {
-        textName.text = daily.time_start?.let {
+        textName.text = daily.startTime()?.let {
             SimpleDateFormat("dd MMM").format(it)
         } ?: daily.id
                 ?: ""
@@ -21,13 +22,7 @@ class DailyListViewHolder(val view: View) : BaseRecyclerViewHolder(view) {
         textTime.text = when (daily.status) {
             Daily.Status.NotStarted -> ""
             Daily.Status.Started -> "LIVE!"
-            Daily.Status.Finished -> {
-                val time = when {
-                    daily.time_end != null && daily.time_start != null -> daily.time_end!!.time - daily.time_start!!.time
-                    else -> null
-                }
-                time?.let { SimpleDateFormat("m'm'").format(it) } ?: ""
-            }
+            Daily.Status.Finished -> { daily.time?.let { SimpleDateFormat("m'm'").format(it) } ?: "" }
         }
 
         // Colors

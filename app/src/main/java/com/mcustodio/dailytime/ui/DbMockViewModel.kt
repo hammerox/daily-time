@@ -102,8 +102,8 @@ object DbMockViewModel {
 
     fun closeDaily(): Task<Void> {
         val daily = selectedDaily.value
-        daily?.time_end = Calendar.getInstance().time
-        val values = hashMapOf("time_end" to daily?.time_end as Any, "status" to daily.status)
+        daily?.time = Calendar.getInstance().time.time - daily?.started_at!!
+        val values = hashMapOf("time" to daily.time as Any)
         val reference = FirebaseDB.instance.getReference("dailies/${daily.id}/")
         return reference.updateChildren(values)
     }

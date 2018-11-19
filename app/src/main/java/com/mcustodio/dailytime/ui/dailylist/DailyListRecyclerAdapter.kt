@@ -14,7 +14,7 @@ class DailyListRecyclerAdapter(var onItemClick: ((Daily) -> Unit)? = null) : Rec
 
     var dailyList: List<Daily> = ArrayList()
         set (value) {
-            field = value.sortedWith(compareByDescending { it.time_start })
+            field = value.sortedWith(compareByDescending { it.started_at })
             notifyDataSetChanged()
         }
 
