@@ -98,6 +98,10 @@ class TimerFragment : Fragment() {
                 .addOnSuccessListener {}
                 .addOnFailureListener { Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show() }
         }
+
+        view?.linear_dailytimer_randommember?.setOnClickListener {
+            view?.text_dailytimer_randommember?.text = DbMockViewModel.chooseRandomMemberToSpeak()?.nickname ?: "-"
+        }
     }
 
 

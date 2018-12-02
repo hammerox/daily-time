@@ -2,7 +2,6 @@ package com.mcustodio.dailytime.ui
 
 import android.arch.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
-import com.google.firebase.database.FirebaseDatabase
 import com.mcustodio.dailytime.FirebaseDB
 import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.data.Member
@@ -93,6 +92,16 @@ object DbMockViewModel {
         val memberId = selectedMember.value?.id
         val reference = FirebaseDB.instance.getReference("members/$memberId/")
         return reference.updateChildren(hashMapOf("speaking" to isSpeaking as Any))
+    }
+
+    fun chooseRandomMemberToSpeak(): Member? {
+        val membersThatAlreadySpoken = DbMockViewModel.selectedDaily.value?.members_time?.keys ?: hashSetOf()
+        return DbMockViewModel.members.value
+            ?.filter { !membersThatAlreadySpoken.contains(it.id) }
+            ?.run {
+                val randomIndex = Random().nextInt(this.size)
+                this[randomIndex]
+            }
     }
 
     fun createDaily(): Task<Void> {
