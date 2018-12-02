@@ -3,6 +3,7 @@ package com.mcustodio.dailytime.ui
 import android.arch.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.mcustodio.dailytime.FirebaseDB
+import com.mcustodio.dailytime.FirebaseTopics
 import com.mcustodio.dailytime.data.Daily
 import com.mcustodio.dailytime.data.Member
 import com.mcustodio.dailytime.data.Team
@@ -72,6 +73,7 @@ object DbMockViewModel {
         this.selectedMember.value = currentMember
         this.isAdmin.value = currentMember?.admin ?: false
         this.selectedDaily.value = dailies.value?.find { d -> d.team_id == selectedTeam.id && d.status == Daily.Status.Started }
+        FirebaseTopics().subscribeTo(selectedTeam.id)
     }
 
 
