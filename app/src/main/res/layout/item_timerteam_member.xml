@@ -28,6 +28,6 @@
             android:tint="@color/colorPrimary"
             android:visibility="gone"
             tools:visibility="visible"
-            app:srcCompat="@drawable/ic_mic_black_24dp"/>
+            app:srcCompat="@drawable/ic_timer_black_24dp" />
 
 </FrameLayout>

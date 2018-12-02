@@ -75,7 +75,7 @@ class TimerFragment : Fragment() {
     private fun setupClickListeners() {
         view?.linear_dailytimer_clock?.setOnClickListener {
             if (!clock.isRunning) {
-                view?.text_dailytimer_timer?.setTextColor(ContextCompat.getColor(activity!!, R.color.red_500))
+                view?.text_dailytimer_timer?.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
                 clock.start()
                 DbMockViewModel.isSpeaking(true)
 
@@ -109,12 +109,12 @@ class TimerFragment : Fragment() {
             view?.text_dailytimer_milli?.setMilliseconds(time)
         }
 
-        view?.text_dailytimer_timer?.setTime(initialTime)
+        view?.text_dailytimer_timer?.setTime(initialTime, zerosIfNull = true)
         view?.text_dailytimer_milli?.setMilliseconds(initialTime)
     }
 
 
-    private fun TextView.setTime(time: Long?, signed: Boolean = false) {
+    private fun TextView.setTime(time: Long?, signed: Boolean = false, zerosIfNull: Boolean = false) {
         this.text = if (time != null && time != 0L) {
             val totalSeconds = (time / 1000).toInt()
             val minutes = Math.abs(totalSeconds / 60)
@@ -123,7 +123,7 @@ class TimerFragment : Fragment() {
             if (signed) (if (time > 0) "+$timeString" else "-$timeString")
             else timeString
         } else {
-            "-"
+            if (zerosIfNull) "0:00" else "-"
         }
 
     }

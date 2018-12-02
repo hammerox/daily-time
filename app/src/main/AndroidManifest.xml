@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".ui.teamlist.TeamListActivity">
         </activity>
-        <activity android:name=".ui.daily.DailyActivity">
+        <activity android:name=".ui.daily.DailyActivity"
+                  android:screenOrientation="portrait">
         </activity>
     </application>
 
